@@ -402,6 +402,27 @@
     display: none;
   }
 
+  /* Paste response area */
+  .paste-area {
+    background: var(--green-light); border: 1.5px solid var(--green-mid);
+    border-radius: 18px; padding: 14px 16px; margin-bottom: 14px;
+    display: none;
+  }
+  .paste-title {
+    font-size: 13px; font-weight: 700; color: var(--green-dark); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .paste-steps {
+    font-size: 12px; color: var(--green-dark); opacity: .8;
+    margin-bottom: 10px; line-height: 1.8;
+  }
+  .paste-apply-btn {
+    width: 100%; padding: 12px; background: var(--green); color: white;
+    border: none; border-radius: 14px; font-size: 13px; font-weight: 700;
+    cursor: pointer; margin-top: 8px; transition: transform .1s;
+  }
+  .paste-apply-btn:active { transform: scale(.97); }
+
   /* ── Notes section ──────────────────────── */
   .notes-head {
     display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
@@ -661,11 +682,16 @@
         <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhoto(this)">
 
         <!-- Claude button -->
-        <button class="claude-btn" id="form-claude-btn" onclick="copyPrompt(this,'form-claude-tip')">
+        <button class="claude-btn" id="form-claude-btn" onclick="identifyWithClaude()">
           &#x2728; Identificar com Claude
         </button>
-        <div class="claude-tip" id="form-claude-tip">
-          Abra o <strong>Claude.ai</strong>, envie a foto da planta e cole o texto copiado. Depois preencha os campos abaixo com as informacoes que ele retornar.
+
+        <!-- Paste response area -->
+        <div class="paste-area" id="form-paste-area">
+          <div class="paste-title">&#x1F4CB; Cole a resposta do Claude aqui</div>
+          <div class="paste-steps">1&#xFE0F;&#x20E3; No Claude.ai, anexe a foto da planta<br>2&#xFE0F;&#x20E3; O prompt ja foi copiado — cole e envie<br>3&#xFE0F;&#x20E3; Copie a resposta e cole abaixo</div>
+          <textarea class="textarea" id="form-paste-ta" rows="5" placeholder="Cole aqui a resposta do Claude..."></textarea>
+          <button class="paste-apply-btn" onclick="applyClaudeResponse()">&#x2728; Preencher campos automaticamente</button>
         </div>
 
         <!-- Name -->
@@ -1291,7 +1317,8 @@ function resetForm() {
   formPhoto = null
   setPhotoAreaEmpty()
   const cb=$('form-claude-btn'); cb.textContent='\u2728 Identificar com Claude'; cb.classList.remove('copied')
-  show('form-claude-tip', false)
+  show('form-paste-area', false)
+  const ta=$('form-paste-ta'); if(ta) ta.value=''
 }
 
 function fillForm(p) {
@@ -1357,18 +1384,112 @@ function submitForm() {
 }
 
 // ─────────────────────────────────────────
-// CLAUDE PROMPT
+// CLAUDE PROMPT + IDENTIFICACAO
 // ─────────────────────────────────────────
-const PROMPT = `Identifique esta planta e responda em portugues:
+const PROMPT = `Identifique esta planta e responda EXATAMENTE neste formato, sem texto adicional:
 
-1. Nome popular e cientifico
-2. Frequencia ideal de rega (a cada quantos dias)
-3. Necessidade de luz: sol pleno, meia sombra ou sombra
-4. Local ideal: interno, varanda ou terraco
-5. Frequencia de adubacao (a cada quantos dias)
-6. 3 dicas principais de cuidado
+NOME: [nome popular]
+ESPECIE: [nome cientifico]
+REGA: [numero de dias entre regas, so o numero]
+LUZ: [sol pleno | meia sombra | sombra]
+LOCAL: [interno | varanda | terraco]
+ADUBACAO: [numero de dias entre adubacoes, so o numero — ou NAO se nao precisar]
+CUIDADOS:
+- [dica 1]
+- [dica 2]
+- [dica 3]`
 
-Seja direto e pratico.`
+function identifyWithClaude() {
+  const btn = $('form-claude-btn')
+  navigator.clipboard.writeText(PROMPT).then(() => {
+    // Abre claude.ai numa nova aba
+    window.open('https://claude.ai/new', '_blank')
+    // Mostra area de colar resposta
+    show('form-paste-area', true)
+    // Feedback no botao
+    btn.textContent = '\u2713 Claude.ai aberto! Prompt copiado'
+    btn.classList.add('copied')
+    setTimeout(() => {
+      btn.classList.remove('copied')
+      btn.textContent = '\u2728 Identificar com Claude'
+    }, 4000)
+  })
+}
+
+function parseClaudeResponse(text) {
+  const get = key => {
+    const m = text.match(new RegExp(key + ':\\s*(.+)', 'i'))
+    return m ? m[1].trim() : ''
+  }
+  const name     = get('NOME')
+  const species  = get('ESPECIE')
+  const waterRaw = parseInt(get('REGA')) || 7
+  const waterEveryDays = Math.min(30, Math.max(1, waterRaw))
+  const luzRaw   = get('LUZ').toLowerCase()
+  const localRaw = get('LOCAL').toLowerCase()
+  const fertRaw  = get('ADUBACAO').toLowerCase()
+
+  let sunlight = 'meia sombra'
+  if (luzRaw.includes('pleno'))                         sunlight = 'sol pleno'
+  else if (luzRaw.includes('sombra') && !luzRaw.includes('meia')) sunlight = 'sombra'
+
+  let location = 'interno'
+  if (localRaw.includes('varanda'))                     location = 'varanda'
+  else if (localRaw.includes('terra') || localRaw.includes('externo')) location = 'terraco'
+
+  let fertilizeEveryDays = null
+  if (!fertRaw.includes('nao') && !fertRaw.includes('não')) {
+    const n = parseInt(fertRaw)
+    if (n > 0) fertilizeEveryDays = Math.min(90, Math.max(7, n))
+  }
+
+  const careMatch = text.match(/CUIDADOS:\s*([\s\S]+)/i)
+  const careInfo  = careMatch ? careMatch[1].trim() : ''
+
+  return { name, species, waterEveryDays, sunlight, location, fertilizeEveryDays, careInfo }
+}
+
+function applyClaudeResponse() {
+  const ta = $('form-paste-ta')
+  if (!ta || !ta.value.trim()) { alert('Cole a resposta do Claude primeiro!'); return }
+
+  const p = parseClaudeResponse(ta.value)
+
+  if (p.name)    $('f-name').value    = p.name
+  if (p.species) $('f-species').value = p.species
+  if (p.careInfo) $('f-care').value   = p.careInfo
+
+  $('f-water').value = p.waterEveryDays
+  $('f-water-lbl').textContent = p.waterEveryDays + ' dias'
+
+  document.querySelectorAll('#f-loc .opt-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.v === p.location))
+  document.querySelectorAll('#f-sun .opt-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.v === p.sunlight))
+
+  if (p.fertilizeEveryDays) {
+    $('f-fert-toggle').classList.add('on')
+    show('f-fert-sec', true)
+    $('f-fert').value = p.fertilizeEveryDays
+    $('f-fert-lbl').textContent = p.fertilizeEveryDays + ' dias'
+  }
+
+  // Fecha area de colar e da feedback
+  show('form-paste-area', false)
+  ta.value = ''
+  const btn = $('form-claude-btn')
+  btn.textContent = '\u2713 Campos preenchidos!'
+  btn.classList.add('copied')
+  setTimeout(() => {
+    btn.classList.remove('copied')
+    btn.textContent = '\u2728 Identificar com Claude'
+  }, 3000)
+
+  // Scroll para mostrar os campos preenchidos
+  const body = Array.from(document.querySelectorAll('.modal-body'))
+    .find(b => b.closest('.modal-overlay.open'))
+  if (body) setTimeout(() => body.scrollTop = 250, 100)
+}
 
 function copyPrompt(btn, tipId) {
   navigator.clipboard.writeText(PROMPT).then(()=>{
@@ -1377,8 +1498,7 @@ function copyPrompt(btn, tipId) {
     const tip=$(tipId); if(tip) tip.style.display='block'
     setTimeout(()=>{
       btn.classList.remove('copied')
-      const orig = btn.id==='form-claude-btn' ? '\u2728 Identificar com Claude' : '\u2728 Consultar Claude'
-      btn.textContent = orig
+      btn.textContent = '\u2728 Consultar Claude'
     }, 4000)
   })
 }
