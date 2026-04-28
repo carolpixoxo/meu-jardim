@@ -5,113 +5,72 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#059669">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Meu Jardim</title>
 <style>
   :root {
-    --green:       #059669;
-    --green-light: #D1FAE5;
-    --green-dark:  #047857;
-    --green-mid:   #6EE7B7;
-    --teal:        #0D9488;
-    --amber:       #F59E0B;
-    --amber-light: #FEF3C7;
-    --sky:         #0EA5E9;
-    --sky-light:   #E0F2FE;
-    --red:         #EF4444;
-    --red-light:   #FEE2E2;
-    --s50:  #FAFAF9;
-    --s100: #F5F5F4;
-    --s200: #E7E5E4;
-    --s300: #D6D3D1;
-    --s400: #A8A29E;
-    --s500: #78716C;
-    --s600: #57534E;
-    --s700: #44403C;
-    --s800: #292524;
-    --white:#FFFFFF;
-    --radius: 18px;
-    --shadow: 0 2px 10px rgba(0,0,0,0.06);
+    --green:  #059669; --green-l: #D1FAE5; --green-d: #047857; --green-m: #6EE7B7;
+    --teal:   #0D9488;
+    --amber:  #F59E0B; --amber-l: #FEF3C7;
+    --sky:    #0EA5E9; --sky-l:   #E0F2FE;
+    --red:    #EF4444; --red-l:   #FEE2E2;
+    --s50:  #FAFAF9; --s100: #F5F5F4; --s200: #E7E5E4;
+    --s400: #A8A29E; --s500: #78716C; --s600: #57534E;
+    --s700: #44403C; --s800: #292524;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--s50);
-    color: var(--s800);
-    overscroll-behavior: none;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--s50); color: var(--s800); overscroll-behavior: none; }
 
-  /* ── Layout ─────────────────────────────── */
   #app { max-width: 430px; margin: 0 auto; min-height: 100dvh; position: relative; }
   .page { display: none; padding-bottom: 90px; }
   .page.active { display: block; }
 
-  /* ── Bottom Nav ─────────────────────────── */
+  /* Nav */
   .bottom-nav {
     position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
     width: 100%; max-width: 430px;
-    background: var(--white); border-top: 1px solid var(--s100);
-    z-index: 100; display: flex;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+    background: #fff; border-top: 1px solid var(--s100); z-index: 100; display: flex;
+    box-shadow: 0 -4px 20px rgba(0,0,0,.06);
   }
-  .nav-btn {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; gap: 2px;
-    padding: 10px 4px 14px;
-    border: none; background: none; cursor: pointer; transition: all .15s;
-  }
+  .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px 14px; border: none; background: none; cursor: pointer; }
   .nav-icon  { font-size: 22px; transition: transform .15s; }
   .nav-label { font-size: 10px; font-weight: 600; color: var(--s400); }
-  .nav-dot   { width: 5px; height: 5px; border-radius: 50%; background: transparent; margin-top: 1px; }
+  .nav-dot   { width: 5px; height: 5px; border-radius: 50%; margin-top: 1px; }
   .nav-btn.active .nav-label { color: var(--green); }
   .nav-btn.active .nav-icon  { transform: scale(1.15); }
   .nav-btn.active .nav-dot   { background: var(--green); }
 
-  /* ── FAB ────────────────────────────────── */
+  /* FAB */
   .fab {
-    position: fixed;
-    bottom: 76px;
-    right: max(16px, calc(50vw - 199px));
-    width: 56px; height: 56px;
-    background: var(--green); color: var(--white);
-    border: none; border-radius: 50%;
-    font-size: 30px; font-weight: 300;
+    position: fixed; bottom: 76px; right: max(16px, calc(50vw - 199px));
+    width: 56px; height: 56px; background: var(--green); color: #fff;
+    border: none; border-radius: 50%; font-size: 30px;
     box-shadow: 0 4px 20px rgba(5,150,105,.4);
     cursor: pointer; z-index: 50;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform .15s;
+    display: flex; align-items: center; justify-content: center; transition: transform .15s;
   }
   .fab:active { transform: scale(.92); }
 
-  /* ── Page Header ────────────────────────── */
+  /* Header */
   .page-header {
-    padding: 48px 20px 28px;
-    border-radius: 0 0 28px 28px;
-    color: white;
+    padding: 48px 20px 28px; border-radius: 0 0 28px 28px; color: #fff;
     box-shadow: 0 4px 20px rgba(0,0,0,.1);
     background: linear-gradient(135deg, #059669, #0D9488);
   }
   .page-header h1 { font-size: 24px; font-weight: 800; margin-top: 4px; }
   .page-header p  { font-size: 13px; opacity: .8; margin-top: 4px; }
-
   .header-stats { display: flex; gap: 12px; margin-top: 16px; }
-  .stat-card {
-    flex: 1; background: rgba(255,255,255,.2);
-    border-radius: 16px; padding: 12px 16px;
-  }
+  .stat-card { flex: 1; background: rgba(255,255,255,.2); border-radius: 16px; padding: 12px 16px; }
   .stat-card.warn { background: rgba(245,158,11,.65); }
   .stat-num   { font-size: 22px; font-weight: 800; }
   .stat-label { font-size: 11px; opacity: .85; margin-top: 2px; }
 
-  /* ── Content helpers ────────────────────── */
+  /* Content */
   .content { padding: 20px 16px 0; }
-
   .section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-  .section-bar { width: 4px; height: 20px; border-radius: 4px; background: var(--green); }
+  .section-bar   { width: 4px; height: 20px; border-radius: 4px; background: var(--green); }
   .section-bar.amber { background: var(--amber); }
-  .section-title span { font-weight: 700; font-size: 15px; color: var(--s800); }
+  .section-title span { font-weight: 700; font-size: 15px; }
 
   .empty { text-align: center; padding: 60px 20px; }
   .empty-icon { font-size: 64px; display: block; margin-bottom: 16px; }
@@ -123,124 +82,76 @@
   .all-good h3 { font-size: 18px; font-weight: 700; color: var(--green); }
   .all-good p  { font-size: 13px; color: var(--s400); margin-top: 6px; }
 
-  /* ── Attention cards (Hoje) ─────────────── */
+  /* Attention cards */
   .attn-card {
-    background: var(--white); border-radius: var(--radius);
-    border: 1.5px solid var(--s100); box-shadow: var(--shadow);
+    background: #fff; border-radius: 18px; border: 1.5px solid var(--s100);
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
     padding: 14px; margin-bottom: 10px;
     display: flex; align-items: center; gap: 12px;
     cursor: pointer; transition: transform .1s;
   }
   .attn-card:active { transform: scale(.98); }
-
   .plant-thumb {
     width: 60px; height: 60px; border-radius: 14px;
-    background: var(--green-light); flex-shrink: 0;
+    background: var(--green-l); flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     font-size: 28px; overflow: hidden;
   }
   .plant-thumb img { width: 100%; height: 100%; object-fit: cover; }
-
   .plant-info { flex: 1; min-width: 0; }
-  .plant-name { font-weight: 700; font-size: 14px; color: var(--s800); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .plant-name { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .plant-sub  { font-size: 11px; color: var(--s400); margin-top: 4px; }
-
   .water-btn {
-    width: 46px; height: 46px; border-radius: 14px; border: none;
-    font-size: 20px; cursor: pointer; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform .1s;
+    width: 46px; height: 46px; border-radius: 14px; border: none; flex-shrink: 0;
+    font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform .1s;
   }
   .water-btn:active { transform: scale(.92); }
-  .water-btn.sky  { background: var(--sky);   box-shadow: 0 4px 12px rgba(14,165,233,.3); }
-  .water-btn.done { background: var(--green); color: white; font-size: 16px; font-weight: 700; }
+  .water-btn.sky  { background: var(--sky); box-shadow: 0 4px 12px rgba(14,165,233,.3); }
+  .water-btn.done { background: var(--green); color: #fff; font-size: 16px; font-weight: 700; }
 
-  /* ── Badges ─────────────────────────────── */
-  .badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 20px;
-  }
+  /* Badges */
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
   .badge-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .badge.ok      { background: var(--green-light); color: #065F46; }
-  .badge.ok .badge-dot { background: var(--green); }
-  .badge.today   { background: var(--amber-light); color: #92400E; }
-  .badge.today .badge-dot { background: var(--amber); }
-  .badge.overdue,.badge.never { background: var(--red-light); color: #991B1B; }
+  .badge.ok      { background: var(--green-l); color: #065F46; }
+  .badge.ok      .badge-dot { background: var(--green); }
+  .badge.today   { background: var(--amber-l); color: #92400E; }
+  .badge.today   .badge-dot { background: var(--amber); }
+  .badge.overdue,.badge.never { background: var(--red-l); color: #991B1B; }
   .badge.overdue .badge-dot,.badge.never .badge-dot { background: var(--red); }
 
-  /* ── Plants grid ─────────────────────────── */
+  /* Plant grid */
   .plants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  .plant-card {
-    background: var(--white); border-radius: 20px; overflow: hidden;
-    border: 1px solid var(--s100); box-shadow: var(--shadow);
-    cursor: pointer; transition: transform .1s;
-  }
+  .plant-card { background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--s100); box-shadow: 0 2px 8px rgba(0,0,0,.04); cursor: pointer; transition: transform .1s; }
   .plant-card:active { transform: scale(.95); }
-
-  .pc-img {
-    height: 116px; background: var(--green-light);
-    position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center; font-size: 48px;
-  }
+  .pc-img { height: 116px; background: var(--green-l); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 48px; }
   .pc-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-  .pc-status {
-    position: absolute; top: 8px; right: 8px;
-    width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;
-  }
+  .pc-status { position: absolute; top: 8px; right: 8px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; }
   .pc-status.ok     { background: var(--green); }
   .pc-status.today  { background: var(--amber); }
   .pc-status.overdue,.pc-status.never { background: var(--red); }
-  .pc-fert {
-    position: absolute; bottom: 8px; right: 8px;
-    width: 20px; height: 20px; border-radius: 50%;
-    background: var(--amber); color: white;
-    display: flex; align-items: center; justify-content: center; font-size: 11px;
-  }
-  .pc-loc {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,.4), transparent);
-    color: white; font-size: 11px; font-weight: 600;
-    padding: 4px 8px 6px;
-  }
+  .pc-fert { position: absolute; bottom: 8px; right: 8px; width: 20px; height: 20px; border-radius: 50%; background: var(--amber); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .pc-loc  { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,.4), transparent); color: #fff; font-size: 11px; font-weight: 600; padding: 4px 8px 6px; }
   .pc-body  { padding: 10px 12px 12px; }
-  .pc-name  { font-weight: 700; font-size: 13px; color: var(--s800); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pc-name  { font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .pc-spc   { font-size: 11px; color: var(--s400); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
   .pc-water { font-size: 11px; color: var(--s500); margin-top: 6px; }
 
-  /* ── Filter tabs ────────────────────────── */
-  .filter-tabs {
-    display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px;
-    scrollbar-width: none;
-  }
+  /* Filters */
+  .filter-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; scrollbar-width: none; }
   .filter-tabs::-webkit-scrollbar { display: none; }
-  .ftab {
-    flex-shrink: 0; padding: 6px 14px; border-radius: 20px;
-    font-size: 12px; font-weight: 700;
-    border: 1.5px solid var(--s200); background: var(--white); color: var(--s600);
-    cursor: pointer; transition: all .15s;
-  }
-  .ftab.active { background: var(--green); border-color: var(--green); color: white; }
+  .ftab { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1.5px solid var(--s200); background: #fff; color: var(--s600); cursor: pointer; }
+  .ftab.active { background: var(--green); border-color: var(--green); color: #fff; }
 
-  /* ── Plant selector (Historico) ─────────── */
-  .plant-sel {
-    display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px;
-    scrollbar-width: none;
-  }
+  /* Historico selectors */
+  .plant-sel { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; scrollbar-width: none; }
   .plant-sel::-webkit-scrollbar { display: none; }
-  .psel-btn {
-    flex-shrink: 0; display: flex; align-items: center; gap: 6px;
-    padding: 7px 12px; border-radius: 12px;
-    border: 2px solid var(--s200); background: var(--white); color: var(--s600);
-    font-size: 13px; font-weight: 700; cursor: pointer; transition: all .15s;
-  }
-  .psel-btn.active { background: var(--green); border-color: var(--green); color: white; }
+  .psel-btn { flex-shrink: 0; display: flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 12px; border: 2px solid var(--s200); background: #fff; color: var(--s600); font-size: 13px; font-weight: 700; cursor: pointer; }
+  .psel-btn.active { background: var(--green); border-color: var(--green); color: #fff; }
   .psel-thumb { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
 
-  /* ── Stats (Historico) ──────────────────── */
+  /* Stats */
   .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-  .sblock { border-radius: 18px; padding: 14px 10px; color: white; }
+  .sblock { border-radius: 18px; padding: 14px 10px; color: #fff; }
   .sblock.sky   { background: linear-gradient(135deg, #0EA5E9, #0284C7); }
   .sblock.green { background: linear-gradient(135deg, #059669, #047857); }
   .sblock.amber { background: linear-gradient(135deg, #F59E0B, #D97706); }
@@ -249,288 +160,192 @@
   .sblock-num   { font-size: 24px; font-weight: 800; }
   .sblock-label { font-size: 10px; opacity: .85; margin-top: 2px; }
 
-  /* ── Calendar ───────────────────────────── */
+  /* Calendar */
   .cal-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; }
-  .cal-day {
-    aspect-ratio: 1; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 700;
-  }
-  .cal-day.w  { background: var(--sky); color: white; }
-  .cal-day.nw { background: var(--s100); color: var(--s300); }
+  .cal-day { aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+  .cal-day.w  { background: var(--sky); color: #fff; }
+  .cal-day.nw { background: var(--s100); color: var(--s400); }
   .cal-legend { display: flex; gap: 14px; margin-top: 10px; }
   .cal-legend span { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--s400); }
   .cleg-dot { width: 12px; height: 12px; border-radius: 4px; }
 
-  /* ── Section box ────────────────────────── */
-  .sbox {
-    background: var(--white); border-radius: 20px; padding: 16px;
-    border: 1px solid var(--s100); box-shadow: var(--shadow);
-    margin-bottom: 12px;
-  }
+  /* Section box */
+  .sbox { background: #fff; border-radius: 20px; padding: 16px; border: 1px solid var(--s100); box-shadow: 0 2px 8px rgba(0,0,0,.04); margin-bottom: 12px; }
   .sbox-title { font-size: 13px; font-weight: 700; color: var(--s700); margin-bottom: 12px; }
   .sbox-meta  { font-size: 11px; color: var(--s400); margin-top: 10px; }
 
-  /* ── Log entries ────────────────────────── */
+  /* Log */
   .log-list { max-height: 200px; overflow-y: auto; }
-  .log-entry {
-    display: flex; align-items: center; gap: 10px;
-    padding: 9px 0; border-bottom: 1px solid var(--s100);
-  }
+  .log-entry { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--s100); }
   .log-entry:last-child { border-bottom: none; }
   .log-icon { width: 34px; height: 34px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .log-icon.w { background: var(--sky-light); }
-  .log-icon.f { background: var(--amber-light); }
-  .log-text   { font-size: 13px; font-weight: 500; color: var(--s700); }
-  .log-date   { font-size: 11px; color: var(--s400); margin-top: 1px; }
+  .log-icon.w { background: var(--sky-l); }
+  .log-icon.f { background: var(--amber-l); }
+  .log-text { font-size: 13px; font-weight: 500; color: var(--s700); }
+  .log-date { font-size: 11px; color: var(--s400); margin-top: 1px; }
 
-  /* ── Note cards ─────────────────────────── */
   .note-card { background: var(--s50); border-radius: 14px; padding: 11px 13px; margin-bottom: 8px; }
   .note-date { font-size: 11px; color: var(--s400); margin-bottom: 3px; }
   .note-text { font-size: 13px; color: var(--s700); }
 
-  /* ── MODALS / BOTTOM SHEETS ─────────────── */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 200;
-    max-width: 430px; left: 50%; transform: translateX(-50%);
-    display: none; flex-direction: column; justify-content: flex-end;
-  }
-  .modal-overlay.open {
-    display: flex;
-    background: rgba(0,0,0,.5);
-  }
+  /* Modals */
+  .modal-overlay { position: fixed; inset: 0; z-index: 200; max-width: 430px; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; justify-content: flex-end; }
+  .modal-overlay.open { display: flex; background: rgba(0,0,0,.5); }
   .modal-bg { position: absolute; inset: 0; }
-  .modal-sheet {
-    position: relative; background: var(--white);
-    border-radius: 28px 28px 0 0;
-    max-height: 93vh; display: flex; flex-direction: column; overflow: hidden;
-  }
-  .modal-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 20px 14px; border-bottom: 1px solid var(--s100); flex-shrink: 0;
-  }
-  .modal-title { font-size: 18px; font-weight: 800; color: var(--s800); }
-  .modal-close {
-    width: 32px; height: 32px; border: none; background: none;
-    font-size: 18px; color: var(--s400); cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .modal-body { overflow-y: auto; padding: 20px 16px 36px; flex: 1; }
+  .modal-sheet { position: relative; background: #fff; border-radius: 28px 28px 0 0; max-height: 93vh; display: flex; flex-direction: column; overflow: hidden; }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 14px; border-bottom: 1px solid var(--s100); flex-shrink: 0; }
+  .modal-title { font-size: 18px; font-weight: 800; }
+  .modal-close { width: 32px; height: 32px; border: none; background: none; font-size: 18px; color: var(--s400); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .modal-body { overflow-y: auto; padding: 20px 16px 40px; flex: 1; -webkit-overflow-scrolling: touch; }
 
-  /* ── Detail photo header ─────────────────── */
-  .detail-photo {
-    height: 220px; background: var(--green-light); position: relative; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center; font-size: 96px;
-    overflow: hidden;
-  }
+  /* Detail photo */
+  .detail-photo { height: 220px; background: var(--green-l); position: relative; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 96px; overflow: hidden; }
   .detail-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-  .detail-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 55%); }
-  .detail-close-btn {
-    position: absolute; top: 14px; right: 14px; z-index: 2;
-    width: 34px; height: 34px; border-radius: 50%; border: none;
-    background: rgba(0,0,0,.3); backdrop-filter: blur(6px);
-    color: white; font-size: 16px; font-weight: 700; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .detail-status {
-    position: absolute; top: 14px; left: 14px; z-index: 2;
-    padding: 5px 12px; border-radius: 20px;
-    font-size: 11px; font-weight: 700; color: white;
-  }
-  .detail-status.ok     { background: var(--green); }
-  .detail-status.today  { background: var(--amber); }
-  .detail-status.overdue,.detail-status.never { background: var(--red); }
-  .detail-names {
-    position: absolute; bottom: 14px; left: 16px; right: 50px; z-index: 2;
-  }
-  .detail-name    { font-size: 24px; font-weight: 800; color: white; line-height: 1.2; }
-  .detail-species { font-size: 13px; color: rgba(255,255,255,.8); font-style: italic; margin-top: 2px; }
+  .det-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 55%); }
+  .det-close { position: absolute; top: 14px; right: 14px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; border: none; background: rgba(0,0,0,.3); backdrop-filter: blur(6px); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .det-status { position: absolute; top: 14px; left: 14px; z-index: 2; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #fff; }
+  .det-status.ok     { background: var(--green); }
+  .det-status.today  { background: var(--amber); }
+  .det-status.overdue,.det-status.never { background: var(--red); }
+  .det-names { position: absolute; bottom: 14px; left: 16px; right: 50px; z-index: 2; }
+  .det-name    { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.2; }
+  .det-species { font-size: 13px; color: rgba(255,255,255,.8); font-style: italic; margin-top: 2px; }
 
-  /* ── Chips ──────────────────────────────── */
+  /* Chips */
   .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
   .chip { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 20px; }
   .chip.stone { background: var(--s100); color: var(--s600); }
-  .chip.sky   { background: var(--sky-light); color: #0369A1; }
-  .chip.amber { background: var(--amber-light); color: #92400E; }
+  .chip.sky   { background: var(--sky-l); color: #0369A1; }
+  .chip.amber { background: var(--amber-l); color: #92400E; }
 
-  /* ── Action buttons ─────────────────────── */
+  /* Action buttons */
   .action-row { display: flex; gap: 10px; margin-bottom: 14px; }
-  .action-btn {
-    flex: 1; padding: 14px; border-radius: 18px; border: none;
-    font-size: 14px; font-weight: 700; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    transition: transform .1s;
-  }
+  .action-btn { flex: 1; padding: 14px; border-radius: 18px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: transform .1s; }
   .action-btn:active { transform: scale(.95); }
-  .action-btn.water { background: var(--sky);   color: white; box-shadow: 0 4px 12px rgba(14,165,233,.3); }
-  .action-btn.fert  { background: var(--amber); color: white; box-shadow: 0 4px 12px rgba(245,158,11,.3); }
-  .action-btn.done  { background: var(--green); color: white; }
+  .action-btn.water { background: var(--sky); color: #fff; box-shadow: 0 4px 12px rgba(14,165,233,.3); }
+  .action-btn.fert  { background: var(--amber); color: #fff; box-shadow: 0 4px 12px rgba(245,158,11,.3); }
+  .action-btn.done  { background: var(--green); color: #fff; }
 
-  /* ── Alert strip ────────────────────────── */
-  .alert-strip {
-    border-radius: 14px; padding: 10px 14px;
-    font-size: 12px; font-weight: 600; margin-bottom: 12px;
-  }
-  .alert-strip.amber { background: var(--amber-light); color: #78350F; border: 1px solid #FDE68A; }
+  .alert-strip { border-radius: 14px; padding: 10px 14px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+  .alert-strip.amber { background: var(--amber-l); color: #78350F; border: 1px solid #FDE68A; }
 
-  /* ── Mini calendar (dots) ───────────────── */
   .mini-cal { display: flex; flex-wrap: wrap; gap: 5px; }
   .mini-dot { width: 28px; height: 28px; border-radius: 8px; }
   .mini-dot.w  { background: var(--sky); }
   .mini-dot.nw { background: var(--s100); }
 
-  /* ── Care info box ──────────────────────── */
   .care-box { background: #ECFDF5; border-radius: 18px; padding: 16px; margin-bottom: 12px; }
   .care-box-title { font-size: 13px; font-weight: 700; color: #065F46; margin-bottom: 8px; }
-  .care-text { font-size: 13px; color: var(--s600); line-height: 1.65; white-space: pre-wrap; }
+  .care-text { font-size: 13px; color: var(--s600); line-height: 1.7; white-space: pre-wrap; }
 
-  /* ── Claude button ──────────────────────── */
-  .claude-btn {
-    width: 100%; padding: 12px; border-radius: 18px;
-    border: 2px solid var(--green-light); background: var(--green-light);
-    color: var(--green-dark); font-size: 13px; font-weight: 700;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
-    transition: all .15s; margin-bottom: 12px;
-  }
-  .claude-btn:active { transform: scale(.97); }
-  .claude-btn.copied { background: var(--green); border-color: var(--green); color: white; }
-
-  .claude-tip {
-    background: var(--amber-light); border: 1px solid #FDE68A;
-    border-radius: 14px; padding: 11px 14px;
-    font-size: 12px; color: #78350F; line-height: 1.6; margin-bottom: 12px;
-    display: none;
-  }
-
-  /* Paste response area */
-  .paste-area {
-    background: var(--green-light); border: 1.5px solid var(--green-mid);
-    border-radius: 18px; padding: 14px 16px; margin-bottom: 14px;
-    display: none;
-  }
-  .paste-title {
-    font-size: 13px; font-weight: 700; color: var(--green-dark); margin-bottom: 10px;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .paste-steps {
-    font-size: 12px; color: var(--green-dark); opacity: .8;
-    margin-bottom: 10px; line-height: 1.8;
-  }
-  .paste-apply-btn {
-    width: 100%; padding: 12px; background: var(--green); color: white;
-    border: none; border-radius: 14px; font-size: 13px; font-weight: 700;
-    cursor: pointer; margin-top: 8px; transition: transform .1s;
-  }
-  .paste-apply-btn:active { transform: scale(.97); }
-
-  /* ── Notes section ──────────────────────── */
-  .notes-head {
-    display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
-  }
+  .notes-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
   .notes-title { font-size: 14px; font-weight: 700; color: var(--s700); }
-  .notes-add-btn {
-    font-size: 12px; font-weight: 700; color: var(--green);
-    background: var(--green-light); border: 1px solid var(--green-mid);
-    padding: 5px 12px; border-radius: 20px; cursor: pointer;
-  }
+  .notes-add-btn { font-size: 12px; font-weight: 700; color: var(--green); background: var(--green-l); border: 1px solid var(--green-m); padding: 5px 12px; border-radius: 20px; cursor: pointer; }
   .note-input-wrap { display: none; margin-bottom: 10px; }
-  .note-submit {
-    width: 100%; padding: 10px; background: var(--green); color: white;
-    border: none; border-radius: 12px; font-size: 13px; font-weight: 700;
-    cursor: pointer; margin-top: 8px;
-  }
+  .note-submit { width: 100%; padding: 10px; background: var(--green); color: #fff; border: none; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 8px; }
 
-  /* ── Detail bottom bar ──────────────────── */
-  .detail-bottom {
-    display: flex; gap: 10px; padding-top: 14px;
-    border-top: 1px solid var(--s100); margin-top: 4px;
-  }
-  .dbot-btn {
-    flex: 1; padding: 12px; border-radius: 16px;
-    font-size: 13px; font-weight: 700; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-    transition: transform .1s;
-  }
+  .detail-bottom { display: flex; gap: 10px; padding-top: 14px; border-top: 1px solid var(--s100); margin-top: 4px; }
+  .dbot-btn { flex: 1; padding: 12px; border-radius: 16px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: transform .1s; }
   .dbot-btn:active { transform: scale(.95); }
-  .dbot-btn.edit    { border: 2px solid var(--green); background: none; color: var(--green); }
-  .dbot-btn.del     { border: 2px solid #FCA5A5; background: none; color: var(--red); }
-  .dbot-btn.del-cfm { border: 2px solid var(--red); background: var(--red); color: white; }
+  .dbot-btn.edit { border: 2px solid var(--green); background: none; color: var(--green); }
+  .dbot-btn.del  { border: 2px solid #FCA5A5; background: none; color: var(--red); }
+  .dbot-btn.del-cfm { border: 2px solid var(--red); background: var(--red); color: #fff; }
 
-  /* ── Form styles ────────────────────────── */
+  /* ── FORM ─────────────────────────────── */
   .photo-area {
-    width: 100%; height: 160px; background: var(--green-light);
-    border-radius: 18px; border: 2px dashed var(--green-mid);
+    width: 100%; height: 160px; background: var(--green-l);
+    border-radius: 18px; border: 2px dashed var(--green-m);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    cursor: pointer; margin-bottom: 14px; overflow: hidden; position: relative;
+    cursor: pointer; margin-bottom: 16px; overflow: hidden; position: relative;
   }
-  .photo-area:active { opacity: .9; }
   .photo-area img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-  .photo-overlay {
-    position: absolute; inset: 0; background: rgba(0,0,0,.22);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .photo-pill { background: rgba(255,255,255,.9); color: var(--green-dark); font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; }
+  .photo-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.22); display: flex; align-items: center; justify-content: center; }
+  .photo-pill { background: rgba(255,255,255,.9); color: var(--green-d); font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; }
   .photo-icon { font-size: 38px; }
-  .photo-hint { font-size: 13px; font-weight: 600; color: var(--green-dark); margin-top: 7px; }
+  .photo-hint { font-size: 13px; font-weight: 600; color: var(--green-d); margin-top: 7px; }
   .photo-sub  { font-size: 11px; color: var(--s400); margin-top: 3px; }
 
-  .field-wrap { margin-bottom: 16px; }
-  .field-label {
-    display: block; font-size: 11px; font-weight: 700;
-    color: var(--s500); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px;
+  /* Claude section — visual and prominent */
+  .claude-section {
+    background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+    border: 1.5px solid var(--green-m); border-radius: 20px;
+    padding: 16px; margin-bottom: 20px;
   }
+  .claude-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .claude-badge {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: var(--green); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .claude-header-text { flex: 1; }
+  .claude-title { font-size: 14px; font-weight: 800; color: var(--green-d); }
+  .claude-sub   { font-size: 12px; color: var(--s500); margin-top: 3px; line-height: 1.5; }
+  .claude-steps { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .claude-step  { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--s600); }
+  .claude-step-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--green); color: #fff;
+    font-size: 10px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .copy-btn {
+    width: 100%; padding: 12px; border-radius: 14px;
+    border: none; background: var(--green); color: #fff;
+    font-size: 13px; font-weight: 700; cursor: pointer; transition: all .15s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .copy-btn:active { transform: scale(.97); }
+  .copy-btn.copied { background: var(--green-d); }
+
+  /* Paste area */
+  .paste-area {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1.5px dashed var(--green-m);
+    display: none;
+  }
+  .paste-label { font-size: 12px; font-weight: 700; color: var(--green-d); margin-bottom: 6px; }
+
+  /* Form fields */
+  .field-wrap { margin-bottom: 18px; }
+  .field-label { display: block; font-size: 11px; font-weight: 700; color: var(--s500); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+
   .input {
-    width: 100%; padding: 12px 16px;
+    width: 100%; padding: 13px 16px;
     background: var(--s50); border: 1.5px solid var(--s200); border-radius: 14px;
-    font-size: 14px; color: var(--s800); outline: none; font-family: inherit;
-    transition: border-color .15s;
+    font-size: 14px; color: var(--s800); outline: none; font-family: inherit; transition: border-color .15s;
   }
   .input:focus { border-color: var(--green); }
   .input.italic { font-style: italic; }
+  .input.small  { width: 90px; text-align: center; }
 
-  .btn-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  .opt-btn {
-    padding: 11px 6px; border-radius: 14px;
-    border: 2px solid var(--s200); background: var(--s50); color: var(--s500);
-    font-size: 11px; font-weight: 700; cursor: pointer;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    transition: all .15s;
-  }
-  .opt-btn .ob-icon { font-size: 22px; }
-  .opt-btn.active { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
+  .freq-row { display: flex; align-items: center; gap: 10px; }
+  .freq-unit { font-size: 14px; color: var(--s500); font-weight: 500; }
 
-  .range-wrap { margin-top: 6px; }
-  input[type=range] { width: 100%; height: 6px; border-radius: 6px; accent-color: var(--green); cursor: pointer; }
-  input[type=range].amber-range { accent-color: var(--amber); }
-  .range-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--s400); margin-top: 4px; }
-
-  .toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-  .toggle-lbl { font-size: 13px; font-weight: 600; color: var(--s700); }
-  .toggle {
-    width: 42px; height: 24px; background: var(--s200); border-radius: 12px;
-    border: none; cursor: pointer; position: relative; transition: background .2s; flex-shrink: 0;
+  /* Pill selectors */
+  .pill-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill-opt {
+    padding: 9px 14px; border-radius: 20px;
+    border: 1.5px solid var(--s200); background: #fff;
+    font-size: 13px; font-weight: 600; color: var(--s600);
+    cursor: pointer; transition: all .15s; white-space: nowrap;
   }
-  .toggle.on { background: var(--green); }
-  .tknob {
-    position: absolute; top: 2px; left: 2px;
-    width: 20px; height: 20px; background: white; border-radius: 50%;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2); transition: left .2s;
-  }
-  .toggle.on .tknob { left: 20px; }
+  .pill-opt.active { background: var(--green-l); border-color: var(--green); color: var(--green-d); }
 
   .textarea {
-    width: 100%; padding: 12px 16px;
+    width: 100%; padding: 13px 16px;
     background: var(--s50); border: 1.5px solid var(--s200); border-radius: 14px;
     font-size: 13px; color: var(--s800); resize: none; outline: none;
-    font-family: inherit; line-height: 1.5; transition: border-color .15s;
+    font-family: inherit; line-height: 1.6; transition: border-color .15s;
   }
   .textarea:focus { border-color: var(--green); }
 
+  .divider { height: 1px; background: var(--s100); margin: 20px 0; }
+
   .save-btn {
-    width: 100%; padding: 16px; background: var(--green); color: white;
+    width: 100%; padding: 16px; background: var(--green); color: #fff;
     border: none; border-radius: 18px; font-size: 15px; font-weight: 700;
-    cursor: pointer; box-shadow: 0 6px 20px rgba(5,150,105,.3);
-    transition: transform .1s;
+    cursor: pointer; box-shadow: 0 6px 20px rgba(5,150,105,.3); transition: transform .1s;
   }
   .save-btn:active { transform: scale(.97); }
 </style>
@@ -538,34 +353,27 @@
 <body>
 <div id="app">
 
-  <!-- ══════════════════ PAGE: HOJE ══════════════════ -->
+  <!-- PAGE: HOJE -->
   <div id="page-hoje" class="page active">
     <div class="page-header">
       <p id="hoje-date"></p>
       <h1>Meu Jardim &#x1F33F;</h1>
       <div class="header-stats">
-        <div class="stat-card">
-          <div class="stat-num" id="hoje-total">0</div>
-          <div class="stat-label">plantas</div>
-        </div>
-        <div class="stat-card" id="stat-attn-card">
-          <div class="stat-num" id="hoje-attn">0</div>
-          <div class="stat-label">precisam atencao</div>
-        </div>
+        <div class="stat-card"><div class="stat-num" id="hoje-total">0</div><div class="stat-label">plantas</div></div>
+        <div class="stat-card" id="stat-attn"><div class="stat-num" id="hoje-attn">0</div><div class="stat-label">precisam aten&#xE7;&#xE3;o</div></div>
       </div>
     </div>
     <div class="content">
       <div id="hoje-attn-sec" style="display:none">
         <div class="section-title" style="margin-top:6px">
-          <div class="section-bar amber"></div>
-          <span>Precisam de atencao</span>
+          <div class="section-bar amber"></div><span>Precisam de aten&#xE7;&#xE3;o</span>
         </div>
         <div id="hoje-attn-list"></div>
       </div>
       <div id="hoje-allgood" class="all-good" style="display:none">
         <span class="all-good-icon">&#x2728;</span>
         <h3>Tudo em ordem!</h3>
-        <p>Suas plantas estao bem cuidadas</p>
+        <p>Suas plantas est&#xE3;o bem cuidadas</p>
       </div>
       <div id="hoje-empty" class="empty" style="display:none">
         <span class="empty-icon">&#x1FAB4;</span>
@@ -574,15 +382,14 @@
       </div>
       <div id="hoje-grid-sec" style="display:none">
         <div class="section-title" style="margin-top:20px">
-          <div class="section-bar"></div>
-          <span>Todas as plantas</span>
+          <div class="section-bar"></div><span>Todas as plantas</span>
         </div>
         <div class="plants-grid" id="hoje-grid"></div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════ PAGE: PLANTAS ══════════════════ -->
+  <!-- PAGE: PLANTAS -->
   <div id="page-plantas" class="page">
     <div class="page-header">
       <h1>Minhas Plantas &#x1FAB4;</h1>
@@ -593,7 +400,7 @@
         <button class="ftab active" onclick="setFilter('all',this)">Todas</button>
         <button class="ftab" onclick="setFilter('interno',this)">&#x1F3E0; Interno</button>
         <button class="ftab" onclick="setFilter('varanda',this)">&#x1F305; Varanda</button>
-        <button class="ftab" onclick="setFilter('terraco',this)">&#x2600;&#xFE0F; Terraco</button>
+        <button class="ftab" onclick="setFilter('terraco',this)">&#x2600;&#xFE0F; Terra&#xE7;o</button>
       </div>
       <div class="plants-grid" id="plantas-grid"></div>
       <div id="plantas-empty" class="empty" style="display:none">
@@ -604,17 +411,17 @@
     </div>
   </div>
 
-  <!-- ══════════════════ PAGE: HISTORICO ══════════════════ -->
+  <!-- PAGE: HISTORICO -->
   <div id="page-historico" class="page">
     <div class="page-header">
-      <h1>Historico &#x1F4C5;</h1>
-      <p>Consistencia dos cuidados</p>
+      <h1>Hist&#xF3;rico &#x1F4C5;</h1>
+      <p>Consist&#xEA;ncia dos cuidados</p>
     </div>
     <div class="content">
       <div id="hist-empty" class="empty" style="display:none">
         <span class="empty-icon">&#x1F4C5;</span>
         <h3>Nenhuma planta cadastrada</h3>
-        <p>Adicione plantas para ver o historico</p>
+        <p>Adicione plantas para ver o hist&#xF3;rico</p>
       </div>
       <div id="hist-content" style="display:none">
         <div class="plant-sel" id="hist-sel"></div>
@@ -629,41 +436,35 @@
   <!-- Bottom Nav -->
   <nav class="bottom-nav">
     <button class="nav-btn active" id="nav-hoje" onclick="showPage('hoje',this)">
-      <span class="nav-icon">&#x1F33F;</span>
-      <span class="nav-label">Hoje</span>
-      <span class="nav-dot"></span>
+      <span class="nav-icon">&#x1F33F;</span><span class="nav-label">Hoje</span><span class="nav-dot"></span>
     </button>
     <button class="nav-btn" id="nav-plantas" onclick="showPage('plantas',this)">
-      <span class="nav-icon">&#x1FAB4;</span>
-      <span class="nav-label">Plantas</span>
-      <span class="nav-dot"></span>
+      <span class="nav-icon">&#x1FAB4;</span><span class="nav-label">Plantas</span><span class="nav-dot"></span>
     </button>
     <button class="nav-btn" id="nav-historico" onclick="showPage('historico',this)">
-      <span class="nav-icon">&#x1F4C5;</span>
-      <span class="nav-label">Historico</span>
-      <span class="nav-dot"></span>
+      <span class="nav-icon">&#x1F4C5;</span><span class="nav-label">Hist&#xF3;rico</span><span class="nav-dot"></span>
     </button>
   </nav>
 
-  <!-- ══════════════════ MODAL: DETAIL ══════════════════ -->
+  <!-- MODAL: DETAIL -->
   <div id="modal-detail" class="modal-overlay">
     <div class="modal-bg" onclick="closeDetail()"></div>
     <div class="modal-sheet">
       <div id="det-photo" class="detail-photo">
         <span id="det-emoji" style="position:relative;z-index:1">&#x1F33F;</span>
-        <div class="detail-overlay"></div>
-        <button class="detail-close-btn" onclick="closeDetail()">&#x2715;</button>
-        <div id="det-status" class="detail-status ok"></div>
-        <div class="detail-names">
-          <div id="det-name" class="detail-name"></div>
-          <div id="det-species" class="detail-species" style="display:none"></div>
+        <div class="det-overlay"></div>
+        <button class="det-close" onclick="closeDetail()">&#x2715;</button>
+        <div id="det-status" class="det-status ok"></div>
+        <div class="det-names">
+          <div id="det-name" class="det-name"></div>
+          <div id="det-species" class="det-species" style="display:none"></div>
         </div>
       </div>
       <div class="modal-body" id="det-body"></div>
     </div>
   </div>
 
-  <!-- ══════════════════ MODAL: FORM ══════════════════ -->
+  <!-- MODAL: FORM -->
   <div id="modal-form" class="modal-overlay">
     <div class="modal-bg" onclick="closeForm()"></div>
     <div class="modal-sheet">
@@ -671,9 +472,9 @@
         <span class="modal-title" id="form-title">Nova planta</span>
         <button class="modal-close" onclick="closeForm()">&#x2715;</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="form-body">
 
-        <!-- Photo upload -->
+        <!-- Foto -->
         <div class="photo-area" id="photo-area" onclick="document.getElementById('photo-input').click()">
           <span class="photo-icon">&#x1F4F7;</span>
           <span class="photo-hint">Adicionar foto</span>
@@ -681,540 +482,300 @@
         </div>
         <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhoto(this)">
 
-        <!-- Claude button -->
-        <button class="claude-btn" id="form-claude-btn" onclick="identifyWithClaude()">
-          &#x2728; Identificar com Claude
-        </button>
-
-        <!-- Paste response area -->
-        <div class="paste-area" id="form-paste-area">
-          <div class="paste-title">&#x1F4CB; Cole a resposta do Claude aqui</div>
-          <div class="paste-steps">1&#xFE0F;&#x20E3; No Claude.ai, anexe a foto da planta<br>2&#xFE0F;&#x20E3; O prompt ja foi copiado — cole e envie<br>3&#xFE0F;&#x20E3; Copie a resposta e cole abaixo</div>
-          <textarea class="textarea" id="form-paste-ta" rows="5" placeholder="Cole aqui a resposta do Claude..."></textarea>
-          <button class="paste-apply-btn" onclick="applyClaudeResponse()">&#x2728; Preencher campos automaticamente</button>
+        <!-- Claude section -->
+        <div class="claude-section">
+          <div class="claude-header">
+            <div class="claude-badge">&#x2728;</div>
+            <div class="claude-header-text">
+              <div class="claude-title">Identificar com Claude</div>
+              <div class="claude-sub">Copie as instru&#xE7;&#xF5;es, envie com a foto no Claude.ai e cole a resposta aqui</div>
+            </div>
+          </div>
+          <div class="claude-steps">
+            <div class="claude-step"><span class="claude-step-num">1</span> Copie as instru&#xE7;&#xF5;es abaixo</div>
+            <div class="claude-step"><span class="claude-step-num">2</span> Abra o Claude.ai e envie junto com a foto da planta</div>
+            <div class="claude-step"><span class="claude-step-num">3</span> Copie a resposta e cole no campo que aparecer</div>
+          </div>
+          <button class="copy-btn" id="copy-btn" onclick="copyInstructions()">
+            &#x1F4CB; Copiar instru&#xE7;&#xF5;es do Claude
+          </button>
+          <div class="paste-area" id="paste-area">
+            <div class="paste-label">Cole a resposta do Claude:</div>
+            <textarea class="textarea" id="paste-ta" rows="6" placeholder="Cole aqui a resposta completa do Claude..."></textarea>
+            <button class="copy-btn" style="margin-top:8px" onclick="applyResponse()">
+              &#x2713; Preencher campos automaticamente
+            </button>
+          </div>
         </div>
 
-        <!-- Name -->
+        <!-- Nome -->
         <div class="field-wrap">
-          <label class="field-label">Nome *</label>
-          <input type="text" class="input" id="f-name" placeholder="Ex: Costela-de-adao">
+          <label class="field-label">Nome da planta *</label>
+          <input type="text" class="input" id="f-name" placeholder="Ex: Costela-de-ad&#xE3;o">
         </div>
 
-        <!-- Species -->
+        <!-- Especie -->
         <div class="field-wrap">
-          <label class="field-label">Especie <span style="text-transform:none;font-weight:400;opacity:.7">(opcional)</span></label>
+          <label class="field-label">Esp&#xE9;cie <span style="text-transform:none;font-weight:400;font-size:11px">(opcional)</span></label>
           <input type="text" class="input italic" id="f-species" placeholder="Ex: Monstera deliciosa">
         </div>
 
-        <!-- Location -->
+        <div class="divider"></div>
+
+        <!-- Localização -->
         <div class="field-wrap">
-          <label class="field-label">Localizacao</label>
-          <div class="btn-grid-3" id="f-loc">
-            <button class="opt-btn active" data-v="interno" onclick="pickOpt('f-loc',this)"><span class="ob-icon">&#x1F3E0;</span>Interno</button>
-            <button class="opt-btn"        data-v="varanda" onclick="pickOpt('f-loc',this)"><span class="ob-icon">&#x1F305;</span>Varanda</button>
-            <button class="opt-btn"        data-v="terraco" onclick="pickOpt('f-loc',this)"><span class="ob-icon">&#x2600;&#xFE0F;</span>Terraco</button>
+          <label class="field-label">Onde fica</label>
+          <div class="pill-group" id="f-loc">
+            <button class="pill-opt active" data-v="interno"  onclick="pickPill('f-loc',this)">&#x1F3E0; Interno</button>
+            <button class="pill-opt"        data-v="varanda"  onclick="pickPill('f-loc',this)">&#x1F305; Varanda</button>
+            <button class="pill-opt"        data-v="terraco"  onclick="pickPill('f-loc',this)">&#x2600;&#xFE0F; Terra&#xE7;o</button>
           </div>
         </div>
 
-        <!-- Sunlight -->
+        <!-- Luz -->
         <div class="field-wrap">
-          <label class="field-label">Luz necessaria</label>
-          <div class="btn-grid-3" id="f-sun">
-            <button class="opt-btn"        data-v="sol pleno"   onclick="pickOpt('f-sun',this)"><span class="ob-icon">&#x2600;&#xFE0F;</span>Sol pleno</button>
-            <button class="opt-btn active" data-v="meia sombra" onclick="pickOpt('f-sun',this)"><span class="ob-icon">&#x26C5;</span>Meia sombra</button>
-            <button class="opt-btn"        data-v="sombra"      onclick="pickOpt('f-sun',this)"><span class="ob-icon">&#x1F311;</span>Sombra</button>
+          <label class="field-label">Luz necess&#xE1;ria</label>
+          <div class="pill-group" id="f-sun">
+            <button class="pill-opt"        data-v="sol pleno"   onclick="pickPill('f-sun',this)">&#x2600;&#xFE0F; Sol pleno</button>
+            <button class="pill-opt active" data-v="meia sombra" onclick="pickPill('f-sun',this)">&#x26C5; Meia sombra</button>
+            <button class="pill-opt"        data-v="sombra"      onclick="pickPill('f-sun',this)">&#x1F311; Sombra</button>
           </div>
         </div>
 
-        <!-- Watering frequency -->
+        <div class="divider"></div>
+
+        <!-- Rega -->
         <div class="field-wrap">
-          <label class="field-label">&#x1F4A7; Regar a cada <span id="f-water-lbl" style="color:var(--green);text-transform:none;font-size:14px;font-weight:800">7 dias</span></label>
-          <div class="range-wrap">
-            <input type="range" min="1" max="30" value="7" id="f-water" oninput="$('f-water-lbl').textContent=this.value+' dias'">
-            <div class="range-labels"><span>Diario</span><span>15d</span><span>30d</span></div>
+          <label class="field-label">&#x1F4A7; Regar a cada</label>
+          <div class="freq-row">
+            <input type="number" class="input small" id="f-water" value="7" min="1" max="365">
+            <span class="freq-unit">dias</span>
           </div>
         </div>
 
-        <!-- Fertilizing -->
+        <!-- Adubacao -->
         <div class="field-wrap">
-          <div class="toggle-row">
-            <span class="toggle-lbl">&#x1F331; Controlar adubacao</span>
-            <button class="toggle" id="f-fert-toggle" onclick="toggleFert(this)"><div class="tknob"></div></button>
-          </div>
-          <div id="f-fert-sec" style="display:none">
-            <label class="field-label">Adubar a cada <span id="f-fert-lbl" style="color:var(--amber);text-transform:none;font-size:14px;font-weight:800">30 dias</span></label>
-            <div class="range-wrap">
-              <input type="range" min="7" max="90" step="7" value="30" id="f-fert" class="amber-range" oninput="$('f-fert-lbl').textContent=this.value+' dias'">
-              <div class="range-labels"><span>7d</span><span>~1 mes</span><span>90d</span></div>
-            </div>
+          <label class="field-label">&#x1F331; Adubar a cada <span style="text-transform:none;font-weight:400;font-size:11px">(deixe vazio se n&#xE3;o precisar)</span></label>
+          <div class="freq-row">
+            <input type="number" class="input small" id="f-fert" placeholder="—" min="1" max="365">
+            <span class="freq-unit">dias</span>
           </div>
         </div>
 
-        <!-- Care info -->
+        <div class="divider"></div>
+
+        <!-- Cuidados -->
         <div class="field-wrap">
-          <label class="field-label">Informacoes de cuidado</label>
-          <textarea class="textarea" id="f-care" rows="4" placeholder="Cole aqui as dicas que o Claude retornou, ou escreva suas observacoes..."></textarea>
+          <label class="field-label">Informa&#xE7;&#xF5;es de cuidado</label>
+          <textarea class="textarea" id="f-care" rows="5" placeholder="Cole aqui a resposta do Claude, ou escreva suas observa&#xE7;&#xF5;es sobre a planta..."></textarea>
         </div>
 
         <button class="save-btn" id="f-save-btn" onclick="submitForm()">&#x1F331; Adicionar planta</button>
-      </div>
+
+      </div><!-- /modal-body -->
     </div>
   </div>
 
 </div><!-- #app -->
 
 <script>
-// ─────────────────────────────────────────
-// UTILS
-// ─────────────────────────────────────────
+// ─── Utils ───────────────────────────────────────────────────
 const $ = id => document.getElementById(id)
-
-function show(id, v)  { const e=$(id); if(e) e.style.display = v ? '' : 'none' }
-function today()      { return new Date().toISOString().split('T')[0] }
-function daysBetween(a, b) { return Math.floor((new Date(a) - new Date(b)) / 86400000) }
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
-}
-
+function show(id, v) { const e=$(id); if(e) e.style.display = v ? '' : 'none' }
+function today() { return new Date().toISOString().split('T')[0] }
+function daysBetween(a,b) { return Math.floor((new Date(a)-new Date(b))/86400000) }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
 function last30() {
-  const r = []
-  for (let i = 29; i >= 0; i--) {
-    const d = new Date(); d.setDate(d.getDate() - i)
-    r.push(d.toISOString().split('T')[0])
-  }
+  const r=[]
+  for(let i=29;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);r.push(d.toISOString().split('T')[0])}
   return r
 }
+function mk(tag,cls,html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e }
 
-function mk(tag, cls, html) {
-  const e = document.createElement(tag)
-  if (cls)  e.className = cls
-  if (html !== undefined) e.innerHTML = html
-  return e
-}
-
-// ─────────────────────────────────────────
-// STORAGE
-// ─────────────────────────────────────────
+// ─── Storage ─────────────────────────────────────────────────
 const KEY = 'meu_jardim_v1'
-
-function getPlants()        { try { return JSON.parse(localStorage.getItem(KEY)) || [] } catch { return [] } }
-function savePlants(plants) { localStorage.setItem(KEY, JSON.stringify(plants)) }
-function getPlant(id)       { return getPlants().find(p => p.id === id) || null }
+function getPlants() { try{ return JSON.parse(localStorage.getItem(KEY))||[] }catch{return[]} }
+function savePlants(list) { try{ localStorage.setItem(KEY,JSON.stringify(list)) }catch(e){ alert('Erro ao salvar: '+e.message) } }
+function getPlant(id) { return getPlants().find(p=>p.id===id)||null }
 
 function createPlant(d) {
   return {
-    id: Date.now().toString(),
-    name: '', species: '', photo: null,
-    location: 'interno', sunlight: 'meia sombra',
-    waterEveryDays: 7, fertilizeEveryDays: null,
-    careInfo: '', addedAt: today(),
-    wateringLog: [], fertilizingLog: [], healthNotes: [],
+    id: Date.now().toString(), name:'', species:'', photo:null,
+    location:'interno', sunlight:'meia sombra',
+    waterEveryDays:7, fertilizeEveryDays:null,
+    careInfo:'', addedAt:today(),
+    wateringLog:[], fertilizingLog:[], healthNotes:[],
     ...d
   }
 }
-
-function addPlant(d)      { const p=createPlant(d), all=getPlants(); all.push(p); savePlants(all); return p }
+function addPlant(d)      { const all=getPlants(), p=createPlant(d); all.push(p); savePlants(all); return p }
 function deletePlant(id)  { savePlants(getPlants().filter(p=>p.id!==id)) }
+function updatePlant(id,d){ const all=getPlants(), i=all.findIndex(p=>p.id===id); if(i<0)return null; all[i]={...all[i],...d}; savePlants(all); return all[i] }
+function doWater(id)      { const all=getPlants(), p=all.find(p=>p.id===id); if(!p)return; p.wateringLog.push({date:today()}); savePlants(all) }
+function doFertilize(id)  { const all=getPlants(), p=all.find(p=>p.id===id); if(!p)return; if(!p.fertilizingLog)p.fertilizingLog=[]; p.fertilizingLog.push({date:today()}); savePlants(all) }
+function doNote(id,text)  { const all=getPlants(), p=all.find(p=>p.id===id); if(!p)return; if(!p.healthNotes)p.healthNotes=[]; p.healthNotes.push({date:today(),text}); savePlants(all) }
 
-function updatePlant(id, d) {
-  const all = getPlants(), i = all.findIndex(p=>p.id===id)
-  if (i < 0) return null
-  all[i] = { ...all[i], ...d }; savePlants(all); return all[i]
-}
+// ─── Status ──────────────────────────────────────────────────
+function daysSinceWater(p) { if(!p.wateringLog.length)return null; return daysBetween(today(),p.wateringLog[p.wateringLog.length-1].date) }
+function waterStatus(p)    { const d=daysSinceWater(p); if(d===null)return'never'; if(d<p.waterEveryDays)return'ok'; if(d===p.waterEveryDays)return'today'; return'overdue' }
+function daysOverdue(p)    { const d=daysSinceWater(p); if(d===null)return 0; return Math.max(0,d-p.waterEveryDays) }
+function daysSinceFert(p)  { if(!p.fertilizingLog?.length)return null; return daysBetween(today(),p.fertilizingLog[p.fertilizingLog.length-1].date) }
+function fertStatus(p)     { if(!p.fertilizeEveryDays)return null; const d=daysSinceFert(p); if(d===null)return'never'; return d>=p.fertilizeEveryDays?'due':'ok' }
+function calcConsistency(p){ const days=last30(), ws=new Set(p.wateringLog.map(l=>l.date)), cnt=days.filter(d=>ws.has(d)).length, exp=Math.max(1,Math.floor(30/p.waterEveryDays)), pct=Math.min(100,Math.round((cnt/exp)*100)); let s=0,ms=0; for(const d of days){if(ws.has(d)){s++;if(s>ms)ms=s}else s=0} return{days,ws,cnt,exp,pct,maxS:ms} }
 
-function doWater(id) {
-  const all=getPlants(), p=all.find(p=>p.id===id)
-  if (!p) return null
-  p.wateringLog.push({ date: today() }); savePlants(all); return p
-}
+// ─── Navigation ──────────────────────────────────────────────
+let curPage='hoje', filterVal='all', histSel=null, viewingId=null, editingId=null
+let wateredQuick={}, delConfirm=false
 
-function doFertilize(id) {
-  const all=getPlants(), p=all.find(p=>p.id===id)
-  if (!p) return null
-  if (!p.fertilizingLog) p.fertilizingLog = []
-  p.fertilizingLog.push({ date: today() }); savePlants(all); return p
-}
-
-function doNote(id, text) {
-  const all=getPlants(), p=all.find(p=>p.id===id)
-  if (!p) return null
-  if (!p.healthNotes) p.healthNotes = []
-  p.healthNotes.push({ date: today(), text }); savePlants(all); return p
-}
-
-// ─────────────────────────────────────────
-// STATUS HELPERS
-// ─────────────────────────────────────────
-function daysSinceWater(p) {
-  if (!p.wateringLog.length) return null
-  return daysBetween(today(), p.wateringLog[p.wateringLog.length-1].date)
-}
-function waterStatus(p) {
-  const d = daysSinceWater(p)
-  if (d === null) return 'never'
-  if (d < p.waterEveryDays) return 'ok'
-  if (d === p.waterEveryDays) return 'today'
-  return 'overdue'
-}
-function daysOverdue(p) {
-  const d = daysSinceWater(p); if (d===null) return 0
-  return Math.max(0, d - p.waterEveryDays)
-}
-function daysSinceFert(p) {
-  if (!p.fertilizingLog?.length) return null
-  return daysBetween(today(), p.fertilizingLog[p.fertilizingLog.length-1].date)
-}
-function fertStatus(p) {
-  if (!p.fertilizeEveryDays) return null
-  const d = daysSinceFert(p)
-  if (d===null) return 'never'
-  return d >= p.fertilizeEveryDays ? 'due' : 'ok'
-}
-function consistency(p) {
-  const days = last30()
-  const ws   = new Set(p.wateringLog.map(l=>l.date))
-  const cnt  = days.filter(d=>ws.has(d)).length
-  const exp  = Math.max(1, Math.floor(30 / p.waterEveryDays))
-  const pct  = Math.min(100, Math.round((cnt/exp)*100))
-  let streak=0, maxS=0
-  for (const d of days) { if(ws.has(d)){streak++;if(streak>maxS)maxS=streak}else streak=0 }
-  return { days, ws, cnt, exp, pct, maxS }
-}
-
-// ─────────────────────────────────────────
-// NAVIGATION
-// ─────────────────────────────────────────
-let curPage      = 'hoje'
-let filterVal    = 'all'
-let histSel      = null
-let viewingId    = null
-let editingId    = null
-let wateredQuick = {}     // { [plantId]: true } — quick water on Hoje page
-let delConfirm   = false
-
-function showPage(id, btn) {
+function showPage(id,btn) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'))
   $('page-'+id).classList.add('active')
   btn.classList.add('active')
-  curPage = id
-  render(id)
+  curPage=id; render(id)
 }
 function render(id) {
-  if (id==='hoje')      renderHoje()
-  else if (id==='plantas')   renderPlantas()
-  else if (id==='historico') renderHistorico()
+  if(id==='hoje')      renderHoje()
+  else if(id==='plantas')   renderPlantas()
+  else if(id==='historico') renderHistorico()
 }
 
-// ─────────────────────────────────────────
-// RENDER: HOJE
-// ─────────────────────────────────────────
+// ─── Hoje ────────────────────────────────────────────────────
 function renderHoje() {
-  const plants = getPlants()
-  const t = new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})
-  $('hoje-date').textContent = t
-
-  const attn = plants
-    .filter(p => ['never','overdue','today'].includes(waterStatus(p)))
-    .sort((a,b) => {const o={never:0,overdue:1,today:2}; return o[waterStatus(a)]-o[waterStatus(b)]})
-
-  $('hoje-total').textContent = plants.length
-  $('hoje-attn').textContent  = attn.length
-  $('stat-attn-card').classList.toggle('warn', attn.length > 0)
-
-  const empty  = plants.length === 0
-  const allOk  = !empty && attn.length === 0
-
-  show('hoje-empty',    empty)
-  show('hoje-allgood',  allOk)
-  show('hoje-attn-sec', !empty && attn.length > 0)
-  show('hoje-grid-sec', !empty)
-
-  // Attention list
-  const list = $('hoje-attn-list')
-  list.innerHTML = ''
-  attn.forEach(p => {
-    const st   = waterStatus(p)
-    const ds   = daysSinceWater(p)
-    const over = daysOverdue(p)
-    const done = wateredQuick[p.id]
-
-    const card = mk('div','attn-card')
-    card.onclick = () => openDetail(p.id)
-
-    const thumb = mk('div','plant-thumb')
-    if (p.photo) { const img=document.createElement('img'); img.src=p.photo; img.alt=p.name; thumb.appendChild(img) }
-    else          { thumb.textContent = '\u{1F33F}' }
-
-    const info = mk('div','plant-info')
+  const plants=getPlants()
+  $('hoje-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})
+  const attn=plants.filter(p=>['never','overdue','today'].includes(waterStatus(p)))
+    .sort((a,b)=>({never:0,overdue:1,today:2})[waterStatus(a)]-({never:0,overdue:1,today:2})[waterStatus(b)])
+  $('hoje-total').textContent=plants.length
+  $('hoje-attn').textContent=attn.length
+  $('stat-attn').classList.toggle('warn',attn.length>0)
+  const empty=plants.length===0, allOk=!empty&&attn.length===0
+  show('hoje-empty',empty); show('hoje-allgood',allOk)
+  show('hoje-attn-sec',!empty&&attn.length>0); show('hoje-grid-sec',!empty)
+  const list=$('hoje-attn-list'); list.innerHTML=''
+  attn.forEach(p=>{
+    const st=waterStatus(p), ds=daysSinceWater(p), over=daysOverdue(p), done=wateredQuick[p.id]
+    const card=mk('div','attn-card'); card.onclick=()=>openDetail(p.id)
+    const thumb=mk('div','plant-thumb')
+    if(p.photo){const img=document.createElement('img');img.src=p.photo;img.alt=p.name;thumb.appendChild(img)}else thumb.textContent='\u{1F33F}'
+    const info=mk('div','plant-info')
     info.appendChild(mk('p','plant-name',esc(p.name)))
-    const badgeTxt = st==='overdue' ? `Atrasada ${over}d` : st==='never' ? 'Nunca regada' : 'Regar hoje'
-    info.appendChild(mk('span',`badge ${st}`,`<span class="badge-dot"></span>${badgeTxt}`))
-    if (ds !== null) info.appendChild(mk('p','plant-sub',`Ultima rega ha ${ds} dia${ds>1?'s':''}`))
-
-    const wbtn = mk('button', `water-btn ${done?'done':'sky'}`)
-    wbtn.textContent = done ? '\u2713' : '\u{1F4A7}'
-    wbtn.onclick = e => {
-      e.stopPropagation()
-      doWater(p.id)
-      wateredQuick[p.id] = true
-      renderHoje()
-      setTimeout(()=>{ delete wateredQuick[p.id]; renderHoje() }, 2500)
-    }
-
-    card.appendChild(thumb); card.appendChild(info); card.appendChild(wbtn)
-    list.appendChild(card)
+    const bTxt=st==='overdue'?`Atrasada ${over}d`:st==='never'?'Nunca regada':'Regar hoje'
+    info.appendChild(mk('span',`badge ${st}`,`<span class="badge-dot"></span>${bTxt}`))
+    if(ds!==null) info.appendChild(mk('p','plant-sub',`\xDAltima rega h\xE1 ${ds} dia${ds>1?'s':''}`))
+    const wbtn=mk('button',`water-btn ${done?'done':'sky'}`)
+    wbtn.textContent=done?'\u2713':'\u{1F4A7}'
+    wbtn.onclick=e=>{e.stopPropagation();doWater(p.id);wateredQuick[p.id]=true;renderHoje();setTimeout(()=>{delete wateredQuick[p.id];renderHoje()},2500)}
+    card.appendChild(thumb);card.appendChild(info);card.appendChild(wbtn);list.appendChild(card)
   })
-
-  // All-plants grid
-  const grid = $('hoje-grid')
-  grid.innerHTML = ''
-  plants.forEach(p => grid.appendChild(makePlantCard(p)))
+  const grid=$('hoje-grid'); grid.innerHTML=''
+  plants.forEach(p=>grid.appendChild(makePlantCard(p)))
 }
 
-// ─────────────────────────────────────────
-// RENDER: PLANTAS
-// ─────────────────────────────────────────
+// ─── Plantas ─────────────────────────────────────────────────
 function renderPlantas() {
-  const plants = getPlants()
-  $('plantas-sub').textContent = `${plants.length} ${plants.length===1?'planta':'plantas'} no jardim`
-  show('filter-tabs', plants.length > 0)
-
-  const filtered = filterVal==='all' ? plants : plants.filter(p=>p.location===filterVal)
-  const grid = $('plantas-grid')
-  grid.innerHTML = ''
-
-  if (filtered.length === 0) {
-    show('plantas-empty', true)
-    grid.style.display = 'none'
-    $('plantas-empty-msg').textContent = filterVal==='all'
-      ? 'Toque no + para adicionar sua primeira planta'
-      : 'Adicione uma planta neste local ou mude o filtro'
-  } else {
-    show('plantas-empty', false)
-    grid.style.display = 'grid'
-    filtered.forEach(p => grid.appendChild(makePlantCard(p)))
-  }
+  const plants=getPlants()
+  $('plantas-sub').textContent=`${plants.length} ${plants.length===1?'planta':'plantas'} no jardim`
+  show('filter-tabs',plants.length>0)
+  const filtered=filterVal==='all'?plants:plants.filter(p=>p.location===filterVal)
+  const grid=$('plantas-grid'); grid.innerHTML=''
+  if(!filtered.length){
+    show('plantas-empty',true); grid.style.display='none'
+    $('plantas-empty-msg').textContent=filterVal==='all'?'Toque no + para adicionar sua primeira planta':'Adicione uma planta neste local ou mude o filtro'
+  }else{show('plantas-empty',false);grid.style.display='grid';filtered.forEach(p=>grid.appendChild(makePlantCard(p)))}
 }
+function setFilter(val,btn){filterVal=val;document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderPlantas()}
 
-function setFilter(val, btn) {
-  filterVal = val
-  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'))
-  btn.classList.add('active')
-  renderPlantas()
-}
-
-// ─────────────────────────────────────────
-// RENDER: HISTORICO
-// ─────────────────────────────────────────
+// ─── Historico ───────────────────────────────────────────────
 function renderHistorico() {
-  const plants = getPlants()
-
-  if (!plants.length) {
-    show('hist-empty',   true)
-    show('hist-content', false)
-    return
-  }
-  show('hist-empty',   false)
-  show('hist-content', true)
-
-  if (!histSel || !plants.find(p=>p.id===histSel)) histSel = plants[0].id
-
-  // Selector
-  const sel = $('hist-sel')
-  sel.innerHTML = ''
-  plants.forEach(p => {
-    const btn = mk('button', `psel-btn${p.id===histSel?' active':''}`)
-    if (p.photo) { const img=document.createElement('img'); img.src=p.photo; img.className='psel-thumb'; img.alt=''; btn.appendChild(img) }
+  const plants=getPlants()
+  if(!plants.length){show('hist-empty',true);show('hist-content',false);return}
+  show('hist-empty',false);show('hist-content',true)
+  if(!histSel||!plants.find(p=>p.id===histSel)) histSel=plants[0].id
+  const sel=$('hist-sel'); sel.innerHTML=''
+  plants.forEach(p=>{
+    const btn=mk('button',`psel-btn${p.id===histSel?' active':''}`)
+    if(p.photo){const img=document.createElement('img');img.src=p.photo;img.className='psel-thumb';img.alt='';btn.appendChild(img)}
     else btn.appendChild(document.createTextNode('\u{1F33F} '))
     btn.appendChild(document.createTextNode(p.name))
-    btn.onclick = () => { histSel=p.id; renderHistorico() }
+    btn.onclick=()=>{histSel=p.id;renderHistorico()}
     sel.appendChild(btn)
   })
-
-  const plant = plants.find(p=>p.id===histSel)
-  const stats = $('hist-stats')
-  stats.innerHTML = ''
-  const { days, ws, cnt, exp, pct, maxS } = consistency(plant)
-  const cc = pct>=80?'green':pct>=50?'amber':'red'
-
-  // Stats row
+  const plant=plants.find(p=>p.id===histSel), stats=$('hist-stats'); stats.innerHTML=''
+  const{days,ws,cnt,pct,maxS}=calcConsistency(plant)
+  const cc=pct>=80?'green':pct>=50?'amber':'red'
   stats.appendChild(mk('div','stats-row',`
     <div class="sblock sky"><div class="sblock-num">${cnt}x</div><div class="sblock-label">regas (30d)</div></div>
-    <div class="sblock ${cc}"><div class="sblock-num">${pct}%</div><div class="sblock-label">consistencia</div></div>
+    <div class="sblock ${cc}"><div class="sblock-num">${pct}%</div><div class="sblock-label">consist\xEAncia</div></div>
     <div class="sblock teal"><div class="sblock-num">${maxS}</div><div class="sblock-label">dias seguidos</div></div>
   `))
-
-  // Calendar
-  const cal = mk('div','sbox')
-  cal.innerHTML = '<div class="sbox-title">&#x1F4A7; Calendario de rega &mdash; 30 dias</div>'
-  const grid = mk('div','cal-grid')
-  days.forEach(d => {
-    const day = new Date(d+'T12:00:00').getDate()
-    grid.appendChild(mk('div',`cal-day ${ws.has(d)?'w':'nw'}`,day))
-  })
-  cal.appendChild(grid)
-  cal.innerHTML += `<div class="cal-legend">
-    <span><span class="cleg-dot" style="background:var(--sky)"></span> Regada</span>
-    <span><span class="cleg-dot" style="background:var(--s200)"></span> Sem rega</span>
-  </div>`
+  const cal=mk('div','sbox'); cal.innerHTML='<div class="sbox-title">\u{1F4A7} Calend\xE1rio de rega &mdash; 30 dias</div>'
+  const cg=mk('div','cal-grid')
+  days.forEach(d=>{const day=new Date(d+'T12:00:00').getDate();cg.appendChild(mk('div',`cal-day ${ws.has(d)?'w':'nw'}`,day))})
+  cal.appendChild(cg)
+  cal.innerHTML+=`<div class="cal-legend"><span><span class="cleg-dot" style="background:var(--sky)"></span> Regada</span><span><span class="cleg-dot" style="background:var(--s200)"></span> Sem rega</span></div>`
   stats.appendChild(cal)
-
-  // Watering log
-  if (plant.wateringLog.length) {
-    const box = mk('div','sbox')
-    box.innerHTML = '<div class="sbox-title">&#x1F4CB; Regas registradas</div>'
-    const list = mk('div','log-list')
-    ;[...plant.wateringLog].reverse().forEach(l => {
-      list.appendChild(mk('div','log-entry',`<div class="log-icon w">&#x1F4A7;</div><div><div class="log-text">Regada</div><div class="log-date">${l.date}</div></div>`))
-    })
-    box.appendChild(list); stats.appendChild(box)
-  }
-
-  // Fertilizing log
-  if (plant.fertilizeEveryDays) {
-    const box = mk('div','sbox')
-    box.innerHTML = '<div class="sbox-title">&#x1F331; Adubacoes registradas</div>'
-    if (!plant.fertilizingLog?.length) {
-      box.innerHTML += '<p style="font-size:13px;color:var(--s400);text-align:center;padding:8px 0">Nenhuma adubacao ainda</p>'
-    } else {
-      ;[...plant.fertilizingLog].reverse().forEach(l => {
-        box.appendChild(mk('div','log-entry',`<div class="log-icon f">&#x1F331;</div><div><div class="log-text">Adubada</div><div class="log-date">${l.date}</div></div>`))
-      })
-    }
-    stats.appendChild(box)
-  }
-
-  // Health notes
-  if (plant.healthNotes?.length) {
-    const box = mk('div','sbox')
-    box.innerHTML = '<div class="sbox-title">&#x1F4DD; Notas de saude</div>'
-    ;[...plant.healthNotes].reverse().forEach(n => {
-      box.appendChild(mk('div','note-card',`<div class="note-date">${n.date}</div><div class="note-text">${esc(n.text)}</div>`))
-    })
-    stats.appendChild(box)
-  }
+  if(plant.wateringLog.length){const box=mk('div','sbox');box.innerHTML='<div class="sbox-title">\u{1F4CB} Regas registradas</div>';const ll=mk('div','log-list');[...plant.wateringLog].reverse().forEach(l=>{ll.appendChild(mk('div','log-entry',`<div class="log-icon w">\u{1F4A7}</div><div><div class="log-text">Regada</div><div class="log-date">${l.date}</div></div>`))});box.appendChild(ll);stats.appendChild(box)}
+  if(plant.fertilizeEveryDays){const box=mk('div','sbox');box.innerHTML='<div class="sbox-title">\u{1F331} Aduba\xE7\xF5es registradas</div>';if(!plant.fertilizingLog?.length){box.innerHTML+='<p style="font-size:13px;color:var(--s400);text-align:center;padding:8px 0">Nenhuma aduba\xE7\xE3o ainda</p>'}else{[...plant.fertilizingLog].reverse().forEach(l=>{box.appendChild(mk('div','log-entry',`<div class="log-icon f">\u{1F331}</div><div><div class="log-text">Adubada</div><div class="log-date">${l.date}</div></div>`))})}stats.appendChild(box)}
+  if(plant.healthNotes?.length){const box=mk('div','sbox');box.innerHTML='<div class="sbox-title">\u{1F4DD} Notas de sa\xFAde</div>';[...plant.healthNotes].reverse().forEach(n=>{box.appendChild(mk('div','note-card',`<div class="note-date">${n.date}</div><div class="note-text">${esc(n.text)}</div>`))});stats.appendChild(box)}
 }
 
-// ─────────────────────────────────────────
-// PLANT CARD (shared)
-// ─────────────────────────────────────────
-const locLabel  = { interno:'&#x1F3E0; Interno', varanda:'&#x1F305; Varanda', terraco:'&#x2600;&#xFE0F; Terraco' }
-const locLabelPT = { interno:'Interno', varanda:'Varanda', terraco:'Terraco' }
-
+// ─── Plant Card ──────────────────────────────────────────────
+const locLbl={interno:'\u{1F3E0} Interno',varanda:'\u{1F305} Varanda',terraco:'\u2600\uFE0F Terra\xE7o'}
 function makePlantCard(p) {
-  const st  = waterStatus(p)
-  const ds  = daysSinceWater(p)
-  const fs  = fertStatus(p)
-  const wTxt = ds===null?'nunca regada':ds===0?'regada hoje':`ha ${ds}d`
-
-  const card = mk('div','plant-card')
-  card.onclick = () => openDetail(p.id)
-
-  const img = mk('div','pc-img')
-  if (p.photo) { const i=document.createElement('img'); i.src=p.photo; i.alt=p.name; img.appendChild(i) }
-  else img.textContent = '\u{1F33F}'
-
+  const st=waterStatus(p), ds=daysSinceWater(p), fs=fertStatus(p)
+  const wTxt=ds===null?'nunca regada':ds===0?'regada hoje':`h\xE1 ${ds}d`
+  const card=mk('div','plant-card'); card.onclick=()=>openDetail(p.id)
+  const img=mk('div','pc-img')
+  if(p.photo){const i=document.createElement('img');i.src=p.photo;i.alt=p.name;img.appendChild(i)}else img.textContent='\u{1F33F}'
   img.appendChild(mk('div',`pc-status ${st}`))
-  if (fs==='due'||fs==='never') img.appendChild(mk('div','pc-fert','\u{1F331}'))
-  img.appendChild(mk('div','pc-loc', locLabel[p.location] || p.location))
-
-  const body = mk('div','pc-body')
-  body.innerHTML = `
-    <div class="pc-name">${esc(p.name)}</div>
-    ${p.species?`<div class="pc-spc">${esc(p.species)}</div>`:''}
-    <div class="pc-water">&#x1F4A7; ${wTxt}</div>
-  `
-  card.appendChild(img); card.appendChild(body)
-  return card
+  if(fs==='due'||fs==='never') img.appendChild(mk('div','pc-fert','\u{1F331}'))
+  img.appendChild(mk('div','pc-loc',locLbl[p.location]||p.location))
+  const body=mk('div','pc-body')
+  body.innerHTML=`<div class="pc-name">${esc(p.name)}</div>${p.species?`<div class="pc-spc">${esc(p.species)}</div>`:''}<div class="pc-water">\u{1F4A7} ${wTxt}</div>`
+  card.appendChild(img);card.appendChild(body);return card
 }
 
-// ─────────────────────────────────────────
-// DETAIL MODAL
-// ─────────────────────────────────────────
-function openDetail(id) {
-  viewingId = id
-  delConfirm = false
-  renderDetail(getPlant(id))
-  $('modal-detail').classList.add('open')
-}
-function closeDetail() {
-  $('modal-detail').classList.remove('open')
-  viewingId = null
-  render(curPage)
-}
+// ─── Detail Modal ────────────────────────────────────────────
+function openDetail(id) { viewingId=id; delConfirm=false; renderDetail(getPlant(id)); $('modal-detail').classList.add('open') }
+function closeDetail()  { $('modal-detail').classList.remove('open'); viewingId=null; render(curPage) }
 
 function renderDetail(p) {
-  if (!p) return
-  const st   = waterStatus(p)
-  const ds   = daysSinceWater(p)
-  const over = daysOverdue(p)
-  const fs   = fertStatus(p)
-  const dsf  = daysSinceFert(p)
-
-  // Photo
-  const phArea = $('det-photo')
-  phArea.querySelectorAll('img').forEach(i=>i.remove())
-  const emoji = $('det-emoji')
-  if (p.photo) {
-    emoji.style.display = 'none'
-    const img = document.createElement('img'); img.src=p.photo; img.alt=p.name
-    phArea.insertBefore(img, phArea.firstChild)
-  } else {
-    emoji.style.display = ''; emoji.textContent = '\u{1F33F}'
-  }
-
-  // Status badge
-  const badgeMap = { ok:'&#x2713; Em dia', today:'&#x1F4A7; Regar hoje', overdue:`&#x26A0;&#xFE0F; Atrasada ${over}d`, never:'&#x26A0;&#xFE0F; Nunca regada' }
-  const sb = $('det-status'); sb.className=`detail-status ${st}`; sb.innerHTML=badgeMap[st]
-
-  $('det-name').textContent    = p.name
-  $('det-species').style.display = p.species ? '' : 'none'
-  $('det-species').textContent = p.species || ''
-
-  const sunLabel = { 'sol pleno':'&#x2600;&#xFE0F; Sol pleno','meia sombra':'&#x26C5; Meia sombra','sombra':'&#x1F311; Sombra' }
-  const loc      = locLabel[p.location] || p.location
-  const sun      = sunLabel[p.sunlight] || p.sunlight
-
-  const l30 = last30()
-  const ws  = new Set(p.wateringLog.map(l=>l.date))
-  const miniDots = l30.map(d=>`<div class="mini-dot ${ws.has(d)?'w':'nw'}" title="${d}"></div>`).join('')
-  const fertAlert = (fs==='due'||fs==='never') ? `<div class="alert-strip amber" id="det-fert-alert">${fs==='due'?`&#x1F331; Hora de adubar!${dsf!==null?` Ultima adubacao ha ${dsf} dias.`:''}` : '&#x1F331; Esta planta ainda nao foi adubada.'}</div>` : ''
-
-  $('det-body').innerHTML = `
+  if(!p) return
+  const st=waterStatus(p), ds=daysSinceWater(p), over=daysOverdue(p), fs=fertStatus(p), dsf=daysSinceFert(p)
+  const phArea=$('det-photo'); phArea.querySelectorAll('img').forEach(i=>i.remove())
+  const emoji=$('det-emoji')
+  if(p.photo){emoji.style.display='none';const img=document.createElement('img');img.src=p.photo;img.alt=p.name;phArea.insertBefore(img,phArea.firstChild)}
+  else{emoji.style.display='';emoji.textContent='\u{1F33F}'}
+  const bMap={ok:'\u2713 Em dia',today:'\u{1F4A7} Regar hoje',overdue:`\u26A0\uFE0F Atrasada ${over}d`,never:'\u26A0\uFE0F Nunca regada'}
+  const sb=$('det-status'); sb.className=`det-status ${st}`; sb.innerHTML=bMap[st]
+  $('det-name').textContent=p.name
+  $('det-species').style.display=p.species?'':'none'; $('det-species').textContent=p.species||''
+  const sunLbl={'sol pleno':'\u2600\uFE0F Sol pleno','meia sombra':'\u26C5 Meia sombra','sombra':'\u{1F311} Sombra'}
+  const l30=last30(), ws=new Set(p.wateringLog.map(l=>l.date))
+  const miniDots=l30.map(d=>`<div class="mini-dot ${ws.has(d)?'w':'nw'}" title="${d}"></div>`).join('')
+  const fAlert=(fs==='due'||fs==='never')?`<div class="alert-strip amber" id="det-fert-alert">${fs==='due'?`\u{1F331} Hora de adubar!${dsf!==null?` \xDAltima aduba\xE7\xE3o h\xE1 ${dsf} dias.`:'`'}`:'\u{1F331} Esta planta ainda n\xE3o foi adubada.'}</div>`:''
+  $('det-body').innerHTML=`
     <div class="chips">
-      <span class="chip stone">${loc}</span>
-      <span class="chip stone">${sun}</span>
-      <span class="chip sky">&#x1F4A7; a cada ${p.waterEveryDays}d</span>
-      ${p.fertilizeEveryDays?`<span class="chip amber">&#x1F331; adubo a cada ${p.fertilizeEveryDays}d</span>`:''}
+      <span class="chip stone">${locLbl[p.location]||p.location}</span>
+      <span class="chip stone">${sunLbl[p.sunlight]||p.sunlight}</span>
+      <span class="chip sky">\u{1F4A7} a cada ${p.waterEveryDays}d</span>
+      ${p.fertilizeEveryDays?`<span class="chip amber">\u{1F331} adubo a cada ${p.fertilizeEveryDays}d`:''}
     </div>
-
     <div class="action-row">
-      <button class="action-btn water" id="det-water-btn" onclick="detWater()">&#x1F4A7; Regar agora</button>
-      ${p.fertilizeEveryDays?`<button class="action-btn fert" id="det-fert-btn" onclick="detFert()">&#x1F331; Adubar</button>`:''}
+      <button class="action-btn water" id="det-water-btn" onclick="detWater()">\u{1F4A7} Regar agora</button>
+      ${p.fertilizeEveryDays?`<button class="action-btn fert" id="det-fert-btn" onclick="detFert()">\u{1F331} Adubar</button>`:''}
     </div>
-
-    ${fertAlert}
-
+    ${fAlert}
     <div class="sbox" style="background:var(--s50)">
-      <div class="sbox-title">Regas &mdash; ultimos 30 dias</div>
+      <div class="sbox-title">Regas &mdash; \xFAltimos 30 dias</div>
       <div class="mini-cal">${miniDots}</div>
-      <div class="sbox-meta">${ws.size} rega${ws.size!==1?'s':''} nos ultimos 30 dias${ds!==null?` &middot; ultima ha ${ds} dia${ds>1?'s':''}`:'  &middot; nunca regada'}</div>
+      <div class="sbox-meta">${ws.size} rega${ws.size!==1?'s':''} nos \xFAltimos 30 dias${ds!==null?` &middot; \xFAltima h\xE1 ${ds} dia${ds>1?'s':''}`:' &middot; nunca regada'}</div>
     </div>
-
-    ${p.careInfo ? `<div class="care-box"><div class="care-box-title">&#x1F4A1; Cuidados</div><p class="care-text">${esc(p.careInfo)}</p></div>` : ''}
-
-    <button class="claude-btn" id="det-claude-btn" onclick="copyPrompt(this,'det-claude-tip')">
-      &#x2728; ${p.careInfo?'Consultar Claude':'Identificar com Claude'}
-    </button>
-    <div class="claude-tip" id="det-claude-tip">
-      Abra o <strong>Claude.ai</strong>, envie a foto da planta e cole o texto copiado.
-    </div>
-
+    ${p.careInfo?`<div class="care-box"><div class="care-box-title">\u{1F4A1} Cuidados</div><p class="care-text">${esc(p.careInfo)}</p></div>`:''}
     <div style="margin-bottom:14px">
       <div class="notes-head">
-        <span class="notes-title">&#x1F4DD; Notas de saude</span>
+        <span class="notes-title">\u{1F4DD} Notas de sa\xFAde</span>
         <button class="notes-add-btn" onclick="toggleNoteInput()">+ Adicionar</button>
       </div>
       <div class="note-input-wrap" id="note-wrap">
@@ -1222,13 +783,9 @@ function renderDetail(p) {
         <button class="note-submit" onclick="submitNote()">Salvar nota</button>
       </div>
       <div id="notes-list">
-        ${p.healthNotes?.length
-          ? [...p.healthNotes].reverse().slice(0,5).map(n=>`<div class="note-card"><div class="note-date">${n.date}</div><div class="note-text">${esc(n.text)}</div></div>`).join('')
-          : '<p style="font-size:13px;color:var(--s400);text-align:center;padding:8px 0">Nenhuma nota ainda</p>'
-        }
+        ${p.healthNotes?.length?[...p.healthNotes].reverse().slice(0,5).map(n=>`<div class="note-card"><div class="note-date">${n.date}</div><div class="note-text">${esc(n.text)}</div></div>`).join(''):'<p style="font-size:13px;color:var(--s400);text-align:center;padding:8px 0">Nenhuma nota ainda</p>'}
       </div>
     </div>
-
     <div class="detail-bottom">
       <button class="dbot-btn edit" onclick="openEditForm('${p.id}')">&#x270F;&#xFE0F; Editar</button>
       <button class="dbot-btn del" id="det-del-btn" onclick="handleDelete('${p.id}')">&#x1F5D1;&#xFE0F; Excluir</button>
@@ -1237,275 +794,167 @@ function renderDetail(p) {
 }
 
 function detWater() {
-  if (!viewingId) return
-  doWater(viewingId)
-  const p = getPlant(viewingId)
-  renderDetail(p)
-  const btn = $('det-water-btn')
-  if (btn) { btn.textContent='\u2713 Regada!'; btn.classList.add('done'); btn.classList.remove('water') }
-}
-
-function detFert() {
-  if (!viewingId) return
-  doFertilize(viewingId)
-  const btn = $('det-fert-btn')
-  if (btn) { btn.textContent='\u2713 Adubada!'; btn.classList.add('done'); btn.classList.remove('fert') }
-  const al = $('det-fert-alert'); if (al) al.style.display='none'
-}
-
-function toggleNoteInput() {
-  const w = $('note-wrap')
-  const open = w.style.display !== 'none' && w.style.display !== ''
-  w.style.display = open ? 'none' : 'block'
-  if (!open) { const ta=$('note-ta'); if(ta) ta.focus() }
-}
-
-function submitNote() {
-  const ta = $('note-ta'); if (!ta) return
-  const txt = ta.value.trim(); if (!txt) return
-  doNote(viewingId, txt)
+  if(!viewingId)return; doWater(viewingId)
   renderDetail(getPlant(viewingId))
+  const btn=$('det-water-btn'); if(btn){btn.textContent='\u2713 Regada!';btn.classList.replace('water','done')}
 }
-
+function detFert() {
+  if(!viewingId)return; doFertilize(viewingId)
+  const btn=$('det-fert-btn'); if(btn){btn.textContent='\u2713 Adubada!';btn.classList.replace('fert','done')}
+  const al=$('det-fert-alert'); if(al)al.style.display='none'
+}
+function toggleNoteInput() { const w=$('note-wrap'); const open=w.style.display==='block'; w.style.display=open?'none':'block'; if(!open){const ta=$('note-ta');if(ta)ta.focus()} }
+function submitNote() { const ta=$('note-ta'); if(!ta)return; const txt=ta.value.trim(); if(!txt)return; doNote(viewingId,txt); renderDetail(getPlant(viewingId)) }
 function handleDelete(id) {
-  if (!delConfirm) {
-    delConfirm = true
-    const btn = $('det-del-btn')
-    if (btn) { btn.textContent='Confirmar exclusao'; btn.classList.add('del-cfm') }
-    setTimeout(()=>{
-      delConfirm=false
-      const b=$('det-del-btn')
-      if(b){b.textContent='\u{1F5D1}\uFE0F Excluir';b.classList.remove('del-cfm')}
-    },3000)
-  } else {
-    deletePlant(id); closeDetail()
-  }
+  if(!delConfirm){ delConfirm=true; const btn=$('det-del-btn'); if(btn){btn.textContent='Confirmar exclus\xE3o';btn.classList.add('del-cfm')} setTimeout(()=>{delConfirm=false;const b=$('det-del-btn');if(b){b.textContent='\u{1F5D1}\uFE0F Excluir';b.classList.remove('del-cfm')}},3000) }
+  else{ deletePlant(id); closeDetail() }
 }
 
-// ─────────────────────────────────────────
-// FORM MODAL
-// ─────────────────────────────────────────
-let formPhoto = null
+// ─── Form Modal ──────────────────────────────────────────────
+let formPhoto=null
 
 function openAddForm() {
-  editingId = null; formPhoto = null
-  resetForm()
-  $('form-title').textContent  = 'Nova planta'
-  $('f-save-btn').textContent  = '\u{1F331} Adicionar planta'
+  editingId=null; formPhoto=null; resetForm()
+  $('form-title').textContent='Nova planta'
+  $('f-save-btn').textContent='\u{1F331} Adicionar planta'
   $('modal-form').classList.add('open')
 }
-
 function openEditForm(id) {
-  closeDetail()
-  editingId = id
-  const p = getPlant(id); if (!p) return
+  closeDetail(); editingId=id
+  const p=getPlant(id); if(!p)return
   fillForm(p)
-  $('form-title').textContent  = 'Editar planta'
-  $('f-save-btn').textContent  = '\u2713 Salvar alteracoes'
+  $('form-title').textContent='Editar planta'
+  $('f-save-btn').textContent='\u2713 Salvar altera\xE7\xF5es'
   $('modal-form').classList.add('open')
 }
-
 function closeForm() { $('modal-form').classList.remove('open') }
 
 function resetForm() {
   $('f-name').value=''; $('f-species').value=''; $('f-care').value=''
-  $('f-water').value=7; $('f-water-lbl').textContent='7 dias'
-  $('f-fert').value=30;  $('f-fert-lbl').textContent='30 dias'
-  $('f-fert-toggle').classList.remove('on'); show('f-fert-sec', false)
-  document.querySelectorAll('#f-loc .opt-btn').forEach((b,i)=>b.classList.toggle('active',i===0))
-  document.querySelectorAll('#f-sun .opt-btn').forEach((b,i)=>b.classList.toggle('active',i===1))
-  formPhoto = null
-  setPhotoAreaEmpty()
-  const cb=$('form-claude-btn'); cb.textContent='\u2728 Identificar com Claude'; cb.classList.remove('copied')
-  show('form-paste-area', false)
-  const ta=$('form-paste-ta'); if(ta) ta.value=''
+  $('f-water').value=7; $('f-fert').value=''
+  document.querySelectorAll('#f-loc .pill-opt').forEach((b,i)=>b.classList.toggle('active',i===0))
+  document.querySelectorAll('#f-sun .pill-opt').forEach((b,i)=>b.classList.toggle('active',i===1))
+  formPhoto=null; setPhotoEmpty()
+  const cb=$('copy-btn'); cb.textContent='\u{1F4CB} Copiar instru\xE7\xF5es do Claude'; cb.classList.remove('copied')
+  show('paste-area',false); const ta=$('paste-ta'); if(ta)ta.value=''
 }
-
 function fillForm(p) {
   resetForm()
-  $('f-name').value    = p.name
-  $('f-species').value = p.species || ''
-  $('f-care').value    = p.careInfo || ''
-  $('f-water').value   = p.waterEveryDays
-  $('f-water-lbl').textContent = p.waterEveryDays+' dias'
-  document.querySelectorAll('#f-loc .opt-btn').forEach(b=>b.classList.toggle('active',b.dataset.v===p.location))
-  document.querySelectorAll('#f-sun .opt-btn').forEach(b=>b.classList.toggle('active',b.dataset.v===p.sunlight))
-  if (p.fertilizeEveryDays) {
-    $('f-fert-toggle').classList.add('on'); show('f-fert-sec',true)
-    $('f-fert').value=p.fertilizeEveryDays; $('f-fert-lbl').textContent=p.fertilizeEveryDays+' dias'
-  }
-  if (p.photo) { formPhoto=p.photo; setPhotoAreaFilled(p.photo) }
+  $('f-name').value=p.name; $('f-species').value=p.species||''; $('f-care').value=p.careInfo||''
+  $('f-water').value=p.waterEveryDays; $('f-fert').value=p.fertilizeEveryDays||''
+  document.querySelectorAll('#f-loc .pill-opt').forEach(b=>b.classList.toggle('active',b.dataset.v===p.location))
+  document.querySelectorAll('#f-sun .pill-opt').forEach(b=>b.classList.toggle('active',b.dataset.v===p.sunlight))
+  if(p.photo){formPhoto=p.photo;setPhotoFilled(p.photo)}
 }
-
-function setPhotoAreaEmpty() {
-  $('photo-area').innerHTML = `<span class="photo-icon">&#x1F4F7;</span><span class="photo-hint">Adicionar foto</span><span class="photo-sub">Tirar foto ou escolher da galeria</span>`
-}
-
-function setPhotoAreaFilled(src) {
-  const a=$('photo-area'); a.innerHTML=''
-  const img=document.createElement('img'); img.src=src
-  a.appendChild(img)
-  const ov=mk('div','photo-overlay'); ov.innerHTML='<span class="photo-pill">Trocar foto</span>'
-  a.appendChild(ov)
-}
-
-function handlePhoto(input) {
-  const file=input.files[0]; if(!file) return
-  const fr=new FileReader()
-  fr.onload=e=>{ formPhoto=e.target.result; setPhotoAreaFilled(formPhoto) }
-  fr.readAsDataURL(file)
-}
-
-function pickOpt(groupId, btn) {
-  document.querySelectorAll(`#${groupId} .opt-btn`).forEach(b=>b.classList.remove('active'))
-  btn.classList.add('active')
-}
-
-function toggleFert(btn) {
-  btn.classList.toggle('on')
-  show('f-fert-sec', btn.classList.contains('on'))
-}
+function setPhotoEmpty() { $('photo-area').innerHTML=`<span class="photo-icon">\u{1F4F7}</span><span class="photo-hint">Adicionar foto</span><span class="photo-sub">Tirar foto ou escolher da galeria</span>` }
+function setPhotoFilled(src) { const a=$('photo-area'); a.innerHTML=''; const img=document.createElement('img'); img.src=src; a.appendChild(img); const ov=mk('div','photo-overlay'); ov.innerHTML='<span class="photo-pill">Trocar foto</span>'; a.appendChild(ov) }
+function handlePhoto(input) { const file=input.files[0]; if(!file)return; const fr=new FileReader(); fr.onload=e=>{formPhoto=e.target.result;setPhotoFilled(formPhoto)}; fr.readAsDataURL(file) }
+function pickPill(groupId,btn) { document.querySelectorAll(`#${groupId} .pill-opt`).forEach(b=>b.classList.remove('active')); btn.classList.add('active') }
 
 function submitForm() {
-  const name = $('f-name').value.trim()
-  if (!name) { alert('Da um nome para a planta!'); return }
-  const loc  = document.querySelector('#f-loc .opt-btn.active')?.dataset.v || 'interno'
-  const sun  = document.querySelector('#f-sun .opt-btn.active')?.dataset.v || 'meia sombra'
-  const hasFert = $('f-fert-toggle').classList.contains('on')
-  const data = {
-    name, species: $('f-species').value.trim(),
-    photo: formPhoto, location: loc, sunlight: sun,
-    waterEveryDays: parseInt($('f-water').value),
-    fertilizeEveryDays: hasFert ? parseInt($('f-fert').value) : null,
-    careInfo: $('f-care').value.trim()
+  const name=($('f-name').value||'').trim()
+  if(!name){alert('D\xE1 um nome para a planta!');return}
+  const loc=document.querySelector('#f-loc .pill-opt.active')?.dataset.v||'interno'
+  const sun=document.querySelector('#f-sun .pill-opt.active')?.dataset.v||'meia sombra'
+  const fertVal=parseInt($('f-fert').value)
+  const data={
+    name,
+    species:($('f-species').value||'').trim(),
+    photo:formPhoto,
+    location:loc,
+    sunlight:sun,
+    waterEveryDays:Math.max(1,parseInt($('f-water').value)||7),
+    fertilizeEveryDays:(fertVal>0?fertVal:null),
+    careInfo:($('f-care').value||'').trim()
   }
-  editingId ? updatePlant(editingId, data) : addPlant(data)
-  closeForm(); render(curPage)
+  if(editingId){ updatePlant(editingId,data) } else { addPlant(data) }
+  closeForm()
+  render(curPage)
 }
 
-// ─────────────────────────────────────────
-// CLAUDE PROMPT + IDENTIFICACAO
-// ─────────────────────────────────────────
-const PROMPT = `Identifique esta planta e responda EXATAMENTE neste formato, sem texto adicional:
+// ─── Claude Instructions ─────────────────────────────────────
+const INSTRUCTIONS = `Identifique esta planta e responda EXATAMENTE neste formato:
 
 NOME: [nome popular]
 ESPECIE: [nome cientifico]
-REGA: [numero de dias entre regas, so o numero]
+REGA: [numero de dias entre regas]
 LUZ: [sol pleno | meia sombra | sombra]
 LOCAL: [interno | varanda | terraco]
-ADUBACAO: [numero de dias entre adubacoes, so o numero — ou NAO se nao precisar]
+ADUBACAO: [numero de dias, ou NAO]
 CUIDADOS:
 - [dica 1]
 - [dica 2]
 - [dica 3]`
 
-function identifyWithClaude() {
-  const btn = $('form-claude-btn')
-  navigator.clipboard.writeText(PROMPT).then(() => {
-    // Abre claude.ai numa nova aba
-    window.open('https://claude.ai/new', '_blank')
-    // Mostra area de colar resposta
-    show('form-paste-area', true)
-    // Feedback no botao
-    btn.textContent = '\u2713 Claude.ai aberto! Prompt copiado'
+function copyInstructions() {
+  const btn=$('copy-btn')
+  navigator.clipboard.writeText(INSTRUCTIONS).then(()=>{
+    btn.textContent='\u2713 Copiado! Agora abra o Claude.ai'
     btn.classList.add('copied')
-    setTimeout(() => {
-      btn.classList.remove('copied')
-      btn.textContent = '\u2728 Identificar com Claude'
-    }, 4000)
+    show('paste-area',true)
+    setTimeout(()=>{btn.textContent='\u{1F4CB} Copiar instru\xE7\xF5es do Claude';btn.classList.remove('copied')},3000)
+  }).catch(()=>{
+    // fallback: mostrar o texto para copiar manualmente
+    show('paste-area',true)
   })
 }
 
-function parseClaudeResponse(text) {
-  const get = key => {
-    const m = text.match(new RegExp(key + ':\\s*(.+)', 'i'))
-    return m ? m[1].trim() : ''
-  }
-  const name     = get('NOME')
-  const species  = get('ESPECIE')
-  const waterRaw = parseInt(get('REGA')) || 7
-  const waterEveryDays = Math.min(30, Math.max(1, waterRaw))
-  const luzRaw   = get('LUZ').toLowerCase()
-  const localRaw = get('LOCAL').toLowerCase()
-  const fertRaw  = get('ADUBACAO').toLowerCase()
-
-  let sunlight = 'meia sombra'
-  if (luzRaw.includes('pleno'))                         sunlight = 'sol pleno'
-  else if (luzRaw.includes('sombra') && !luzRaw.includes('meia')) sunlight = 'sombra'
-
-  let location = 'interno'
-  if (localRaw.includes('varanda'))                     location = 'varanda'
-  else if (localRaw.includes('terra') || localRaw.includes('externo')) location = 'terraco'
-
-  let fertilizeEveryDays = null
-  if (!fertRaw.includes('nao') && !fertRaw.includes('não')) {
-    const n = parseInt(fertRaw)
-    if (n > 0) fertilizeEveryDays = Math.min(90, Math.max(7, n))
-  }
-
+function applyResponse() {
+  const ta=$('paste-ta')
+  if(!ta||!ta.value.trim()){alert('Cole a resposta do Claude primeiro!');return}
+  const text=ta.value.trim()
+  const get=key=>{const m=text.match(new RegExp(key+':\\s*(.+)','i'));return m?m[1].trim():''}
+  const name    = get('NOME')
+  const species = get('ESPECIE')
+  const rega    = Math.min(365,Math.max(1,parseInt(get('REGA'))||7))
+  const luzRaw  = get('LUZ').toLowerCase()
+  const locRaw  = get('LOCAL').toLowerCase()
+  const fertRaw = get('ADUBACAO').toLowerCase()
   const careMatch = text.match(/CUIDADOS:\s*([\s\S]+)/i)
-  const careInfo  = careMatch ? careMatch[1].trim() : ''
+  const cuidadosRaw = careMatch?careMatch[1].trim():''
 
-  return { name, species, waterEveryDays, sunlight, location, fertilizeEveryDays, careInfo }
+  let sunlight='meia sombra'
+  if(luzRaw.includes('pleno')) sunlight='sol pleno'
+  else if(luzRaw.includes('sombra')&&!luzRaw.includes('meia')) sunlight='sombra'
+
+  let location='interno'
+  if(locRaw.includes('varanda')) location='varanda'
+  else if(locRaw.includes('terra')||locRaw.includes('externo')) location='terraco'
+
+  let fertDays=null
+  if(!fertRaw.includes('nao')&&!fertRaw.includes('não')){const n=parseInt(fertRaw);if(n>0)fertDays=Math.min(365,n)}
+
+  // Formata o careInfo como template
+  const careInfo=[
+    name?`Planta: ${name}`:'',
+    species?`Esp\xE9cie: ${species}`:'',
+    `Rega: a cada ${rega} dias`,
+    `Luz: ${sunlight}`,
+    `Local: ${location}`,
+    fertDays?`Aduba\xE7\xE3o: a cada ${fertDays} dias`:'Aduba\xE7\xE3o: n\xE3o necess\xE1ria',
+    '',
+    'Cuidados:',
+    cuidadosRaw
+  ].filter(l=>l!==null).join('\n').trim()
+
+  if(name)    $('f-name').value    = name
+  if(species) $('f-species').value = species
+  $('f-care').value = careInfo
+  $('f-water').value = rega
+  if(fertDays) $('f-fert').value = fertDays
+
+  document.querySelectorAll('#f-loc .pill-opt').forEach(b=>b.classList.toggle('active',b.dataset.v===location))
+  document.querySelectorAll('#f-sun .pill-opt').forEach(b=>b.classList.toggle('active',b.dataset.v===sunlight))
+
+  show('paste-area',false); ta.value=''
+  const cb=$('copy-btn'); cb.textContent='\u2713 Campos preenchidos!'; cb.classList.add('copied')
+  setTimeout(()=>{cb.textContent='\u{1F4CB} Copiar instru\xE7\xF5es do Claude';cb.classList.remove('copied')},3000)
+
+  // Scroll para ver os campos preenchidos
+  const body=$('form-body'); if(body) setTimeout(()=>body.scrollTop=320,100)
 }
 
-function applyClaudeResponse() {
-  const ta = $('form-paste-ta')
-  if (!ta || !ta.value.trim()) { alert('Cole a resposta do Claude primeiro!'); return }
-
-  const p = parseClaudeResponse(ta.value)
-
-  if (p.name)    $('f-name').value    = p.name
-  if (p.species) $('f-species').value = p.species
-  if (p.careInfo) $('f-care').value   = p.careInfo
-
-  $('f-water').value = p.waterEveryDays
-  $('f-water-lbl').textContent = p.waterEveryDays + ' dias'
-
-  document.querySelectorAll('#f-loc .opt-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.v === p.location))
-  document.querySelectorAll('#f-sun .opt-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.v === p.sunlight))
-
-  if (p.fertilizeEveryDays) {
-    $('f-fert-toggle').classList.add('on')
-    show('f-fert-sec', true)
-    $('f-fert').value = p.fertilizeEveryDays
-    $('f-fert-lbl').textContent = p.fertilizeEveryDays + ' dias'
-  }
-
-  // Fecha area de colar e da feedback
-  show('form-paste-area', false)
-  ta.value = ''
-  const btn = $('form-claude-btn')
-  btn.textContent = '\u2713 Campos preenchidos!'
-  btn.classList.add('copied')
-  setTimeout(() => {
-    btn.classList.remove('copied')
-    btn.textContent = '\u2728 Identificar com Claude'
-  }, 3000)
-
-  // Scroll para mostrar os campos preenchidos
-  const body = Array.from(document.querySelectorAll('.modal-body'))
-    .find(b => b.closest('.modal-overlay.open'))
-  if (body) setTimeout(() => body.scrollTop = 250, 100)
-}
-
-function copyPrompt(btn, tipId) {
-  navigator.clipboard.writeText(PROMPT).then(()=>{
-    btn.textContent = '\u2713 Prompt copiado! Cole no Claude.ai'
-    btn.classList.add('copied')
-    const tip=$(tipId); if(tip) tip.style.display='block'
-    setTimeout(()=>{
-      btn.classList.remove('copied')
-      btn.textContent = '\u2728 Consultar Claude'
-    }, 4000)
-  })
-}
-
-// ─────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────
+// ─── Init ────────────────────────────────────────────────────
 renderHoje()
 </script>
 </body>
