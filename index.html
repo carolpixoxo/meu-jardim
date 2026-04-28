@@ -287,7 +287,14 @@
       </div>
       <div id="hoje-grid-sec" style="display:none">
         <div class="section-title" style="margin-top:20px"><div class="section-bar"></div><span>Todas as plantas</span></div>
+        <div class="filter-tabs" id="hoje-filter-tabs">
+          <button class="ftab active" onclick="setHomeFilter('all',this)">Todas</button>
+          <button class="ftab" onclick="setHomeFilter('interno',this)">&#x1F3E0; Interno</button>
+          <button class="ftab" onclick="setHomeFilter('varanda',this)">&#x1F305; Varanda</button>
+          <button class="ftab" onclick="setHomeFilter('terraco',this)">&#x2600;&#xFE0F; Terra&#xE7;o</button>
+        </div>
         <div class="plants-grid" id="hoje-grid"></div>
+        <p id="hoje-grid-empty" style="display:none;text-align:center;font-size:13px;color:var(--s400);padding:20px 0">Nenhuma planta neste c&#xF4;modo</p>
       </div>
     </div>
   </div>
@@ -472,7 +479,7 @@ function fertStatus(p){ if(!p.fertilizeEveryDays)return null; const d=daysSinceF
 function calcConsistency(p){ const days=last30(),ws=new Set(p.wateringLog.map(l=>l.date)),cnt=days.filter(d=>ws.has(d)).length,exp=Math.max(1,Math.floor(30/p.waterEveryDays)),pct=Math.min(100,Math.round((cnt/exp)*100)); let s=0,ms=0; for(const d of days){if(ws.has(d)){s++;if(s>ms)ms=s}else s=0} return{days,ws,cnt,exp,pct,maxS:ms} }
 
 // ── Navigation ──
-let curPage='hoje',filterVal='all',histSel=null,viewingId=null,editingId=null,wateredQuick={},delConfirm=false
+let curPage='hoje',filterVal='all',homeFilter='all',histSel=null,viewingId=null,editingId=null,wateredQuick={},delConfirm=false
 function showPage(id,btn){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); $('page-'+id).classList.add('active'); btn.classList.add('active'); curPage=id; render(id) }
 function render(id){ if(id==='hoje')renderHoje(); else if(id==='plantas')renderPlantas(); else if(id==='historico')renderHistorico() }
 
@@ -497,7 +504,10 @@ function renderHoje(){
     wbtn.onclick=e=>{e.stopPropagation();doWater(p.id);wateredQuick[p.id]=true;renderHoje();setTimeout(()=>{delete wateredQuick[p.id];renderHoje()},2500)}
     card.appendChild(thumb);card.appendChild(info);card.appendChild(wbtn);list.appendChild(card)
   })
-  const grid=$('hoje-grid'); grid.innerHTML=''; plants.forEach(p=>grid.appendChild(makePlantCard(p)))
+  const grid=$('hoje-grid'); grid.innerHTML=''
+  const gridPlants=homeFilter==='all'?plants:plants.filter(p=>p.location===homeFilter)
+  if(gridPlants.length){grid.style.display='grid';show('hoje-grid-empty',false);gridPlants.forEach(p=>grid.appendChild(makePlantCard(p)))}
+  else{grid.style.display='none';show('hoje-grid-empty',true)}
 }
 
 // ── Plantas ──
@@ -509,7 +519,8 @@ function renderPlantas(){
   if(!filtered.length){show('plantas-empty',true);grid.style.display='none';$('plantas-empty-msg').textContent=filterVal==='all'?'Toque no + para adicionar sua primeira planta':'Adicione uma planta neste local ou mude o filtro'}
   else{show('plantas-empty',false);grid.style.display='grid';filtered.forEach(p=>grid.appendChild(makePlantCard(p)))}
 }
-function setFilter(val,btn){filterVal=val;document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderPlantas()}
+function setFilter(val,btn){filterVal=val;document.querySelectorAll('#filter-tabs .ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderPlantas()}
+function setHomeFilter(val,btn){homeFilter=val;document.querySelectorAll('#hoje-filter-tabs .ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderHoje()}
 
 // ── Historico ──
 function renderHistorico(){
