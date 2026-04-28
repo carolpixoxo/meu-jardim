@@ -713,7 +713,7 @@ function submitForm(){
   const loc=document.querySelector('#f-loc .pill-opt.active')?.dataset.v||'interno'
   let data
 
-  if(Object.keys(parsedData).length&&!$('manual-fields').style.display&&$('manual-fields').style.display!==''){
+  if(Object.keys(parsedData).length&&$('manual-fields').style.display==='none'){
     // vem do parser OU modo manual está escondido — usa parsedData
     if(!parsedData.name){alert('N\xE3o foi poss\xEDvel identificar o nome da planta. Cole a resposta do Claude novamente.');return}
     data={...parsedData, location:loc, photo:formPhoto}
