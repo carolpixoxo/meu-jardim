@@ -649,8 +649,18 @@ function syncPhoto2(){
 }
 
 function setPhotoEmpty(){ const a=$('photo-area'); if(a) a.innerHTML='<span class="photo-icon">\u{1F4F7}</span><span class="photo-hint">Adicionar foto</span><span class="photo-sub">Tirar foto ou escolher da galeria</span>'; formPhoto=null }
-function handlePhoto(input){ const file=input.files[0]; if(!file)return; const fr=new FileReader(); fr.onload=e=>{ formPhoto=e.target.result; const a=$('photo-area'); if(a){a.innerHTML='';const img=document.createElement('img');img.src=formPhoto;a.appendChild(img);const ov=mk('div','photo-overlay');ov.innerHTML='<span class="photo-pill">Trocar foto</span>';a.appendChild(ov)} }; fr.readAsDataURL(file) }
-function handlePhoto2(input){ const file=input.files[0]; if(!file)return; const fr=new FileReader(); fr.onload=e=>{ formPhoto=e.target.result; syncPhoto2() }; fr.readAsDataURL(file) }
+function compressPhoto(dataUrl, cb){
+  const img=new Image(); img.onload=()=>{
+    const MAX=900, canvas=document.createElement('canvas')
+    let w=img.width,h=img.height
+    if(w>h){ if(w>MAX){h=Math.round(h*MAX/w);w=MAX} } else { if(h>MAX){w=Math.round(w*MAX/h);h=MAX} }
+    canvas.width=w; canvas.height=h
+    canvas.getContext('2d').drawImage(img,0,0,w,h)
+    cb(canvas.toDataURL('image/jpeg',0.72))
+  }; img.src=dataUrl
+}
+function handlePhoto(input){ const file=input.files[0]; if(!file)return; const fr=new FileReader(); fr.onload=e=>{ compressPhoto(e.target.result, compressed=>{ formPhoto=compressed; const a=$('photo-area'); if(a){a.innerHTML='';const img=document.createElement('img');img.src=formPhoto;a.appendChild(img);const ov=mk('div','photo-overlay');ov.innerHTML='<span class="photo-pill">Trocar foto</span>';a.appendChild(ov)} }) }; fr.readAsDataURL(file) }
+function handlePhoto2(input){ const file=input.files[0]; if(!file)return; const fr=new FileReader(); fr.onload=e=>{ compressPhoto(e.target.result, compressed=>{ formPhoto=compressed; syncPhoto2() }) }; fr.readAsDataURL(file) }
 function pickPill(gid,btn){ document.querySelectorAll(`#${gid} .pill-opt`).forEach(b=>b.classList.remove('active')); btn.classList.add('active') }
 
 // ── Parse & Apply ──
